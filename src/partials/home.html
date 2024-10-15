@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="../css/home.css" />
+  </head>
+  <body>
+    <!-- TUTAJ TRZEBA DODAĆ HERO, ALE NIE JA ZA TO BYLAM ODPOWIEDZIALNA -->
+
+    <!-- moja część -->
+    <div class="container-weekly">
+      <h1>Weekly Trends</h1>
+      <div id="trending-container" class="trending-container">
+        <!-- Karty filmów pojawią się tutaj -->
+      </div>
+      <a href="../catalog.html" class="see-all-link">See all</a>
+    </div>
+
+    <div class="container-upcoming">
+      <h1>Upcoming This Month</h1>
+      <div class="movie-card">
+        <img id="movie-poster" src="" alt="Movie Poster" />
+        <div class="movie-details">
+          <h2 id="movie-title">Movie Title</h2>
+          <p><strong>Release date:</strong> <span id="release-date"></span></p>
+          <p><strong>Vote / Votes:</strong> <span id="vote"></span></p>
+          <p><strong>Popularity:</strong> <span id="popularity"></span></p>
+          <p><strong>Genre:</strong> <span id="genre"></span></p>
+          <h3>About</h3>
+          <p id="overview"></p>
+          <button id="library-button">Add to my library</button>
+        </div>
+      </div>
+      <p id="no-movies-message" style="display: none">
+        No movies found for the current month.
+      </p>
+    </div>
+
+    <script type="module" src="../js/home.js"></script>
+  </body>
+</html>
