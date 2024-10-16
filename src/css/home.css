@@ -17,7 +17,7 @@ h1 {
   color: #fff;
 }
 
-.movie-card {
+.upcoming-movie-card {
   display: flex;
   background-color: #222;
   border-radius: 10px;
@@ -25,12 +25,12 @@ h1 {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.movie-card img {
+.upcoming-movie-card img {
   width: 50%;
   height: auto;
 }
 
-.movie-details {
+.upcoming-movie-details {
   padding: 20px;
   width: 50%;
   display: flex;
@@ -38,13 +38,13 @@ h1 {
   justify-content: space-between;
 }
 
-.movie-details h2 {
+.upcoming-movie-details h2 {
   margin-top: 0;
   font-size: 28px;
   color: #ffdd00;
 }
 
-.movie-details p {
+.upcoming-movie-details p {
   margin: 5px 0;
 }
 
@@ -63,7 +63,7 @@ h1 {
 #add-to-library:hover {
   background-color: #e68a00;
 }
-#no-movies-message {
+#upcoming-no-movies-message {
   color: #ff0000;
   font-size: 18px;
   text-align: center;
