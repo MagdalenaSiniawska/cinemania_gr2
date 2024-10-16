@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinemania App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <ul class="nav_list">
+      <li><a href="index.html" class="nav_link">Home</a></li>
+      <li><a href="catalog.html" class="nav_link">Catalog</a></li>
+      <li><a href="library.html" class="nav_link">My Library</a></li>
+    </ul>
+    <button id="menu" class="menu-btn">Menu</button>
+  </nav>
+
+  <!-- Modal for mobile menu -->
+  <div id="modal" class="modal is-hidden">
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="nav_link">Home</a></li>
+      <li><a href="catalog.html" class="nav_link">Catalog</a></li>
+      <li><a href="library.html" class="nav_link">My Library</a></li>
+    </ul>
+  </div>
+
+  <div id="backdrop" class="backdrop is-hidden"></div>
+
+  <!-- Theme toggle button -->
+  <div class="theme-switcher">
+    <span class="logo_text">Cinemania</span>
+    <button class="toggle">Switch Theme</button>
+  </div>
+
+  <!-- Footer with Team Link -->
+  <footer>
+    <a href="#" class="footer__link">Meet the Team</a>
+  </footer>
+
+  <!-- Team Modal -->
+  <div class="team__backdrop is-hidden">
+    <div class="team__wrapper">
+      <h2>Our Team</h2>
+      <p>Meet the amazing people behind Cinemania.</p>
+      <button class="team__modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <script src="library.js"></script>
+</body>
+</html>
