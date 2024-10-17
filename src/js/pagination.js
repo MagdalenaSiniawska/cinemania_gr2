@@ -37,18 +37,20 @@ const getPageList = (totalPages, page, maxLength) => {
   );
 };
 
-(async () => {
-  try {
-    const response = await getTrending('day');
-    console.log(response);
-  } catch (error) {
-    console.log(error);
-  }
-})();
-
 const pagiogig = async () => {
   try {
-    const numberOfItems = await getTrending();
+    const response = await getTrending();
+    const numberOfItems = response.total_results;
+    const totalPages = Math.ceil(numberOfItems / perPage);
+    const paginationSize = 7;
+    let currentPage;
+    const showPage = whichPage => {
+      if (whichPage < 1 || whichPage > totalPages) return false;
+
+      currentPage = whichPage;
+    };
+
+    console.log(totalPages);
   } catch (error) {
     console.log(error);
   }
