@@ -24,7 +24,7 @@ form.addEventListener('submit', e => {
   e.preventDefault();
 });
 
-(async () => {
+export const rendering = async () => {
   try {
     const response = await getTrending('day');
     console.log(response.results);
@@ -32,4 +32,6 @@ form.addEventListener('submit', e => {
   } catch (error) {
     console.log(error);
   }
-})();
+};
+
+rendering();
