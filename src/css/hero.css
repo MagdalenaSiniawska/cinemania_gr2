@@ -1,0 +1,36 @@
+.star-rating {
+    display: flex;
+    gap: 5px;
+}
+
+.full-star,
+.empty-star,
+.half-star {
+    font-size: 24px;
+    color: gold;
+    position: relative;
+}
+
+.empty-star {
+    color: lightgray;
+    /* Puste gwiazdki będą miały inny kolor */
+}
+
+.half-star {
+    color: lightgray;
+    /* Najpierw wyświetlamy pustą gwiazdkę */
+}
+
+.half-star::before {
+    content: '★';
+    /* Dodajemy pełną gwiazdkę */
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    /* Zabarwiamy tylko lewą połowę */
+    overflow: hidden;
+    color: gold;
+    /* Kolor dla zakolorowanej połowy */
+}
+

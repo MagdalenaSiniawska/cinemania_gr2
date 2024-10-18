@@ -4,13 +4,30 @@ import { openDetailsModal, openTrailerModal } from './hero_modals.js';
 const heroElement = document.querySelector('.hero');
 const defaultHeroContent = `
   <div class="hero-content">
-    <h1>Welcome to Movie Catalog</h1>
+    <h1>Let’s Make Your Own Cinema</h1>
+    <p>Is a guide to creating a personalized movie theater experience. You'll need a projector, screen, and speakers. Decorate your space, choose your films, and stock up on snacks for the full experience.</p>
     <button id="get-started">Get Started</button>
   </div>
 `;
 
+// Funkcja pomocnicza tworzenia elementu gwiazdki
+const createStarElement = (type) => {
+  const starElement = document.createElement('span');
+  starElement.classList.add(`${type}-star`);
+  
+  starElement.innerHTML = '&#9733;';
+  
+  if (type === 'empty') {
+    starElement.innerHTML = '&#9734;';
+  }
+
+  return starElement;
+};
+
 // Wyświetlanie gwiazdek jako rating
 const displayStarRating = (rating) => {
+  console.log(`Rating dla filmu: ${rating}`);  // Sprawdzenie, czy rating jest zwracany
+
   const starsContainer = document.createElement('div');
   starsContainer.classList.add('star-rating');
 
@@ -19,24 +36,15 @@ const displayStarRating = (rating) => {
   const emptyStars = 5 - fullStars - halfStar;
 
   for (let i = 0; i < fullStars; i++) {
-    const starElement = document.createElement('span');
-    starElement.innerHTML = '&#9733;';
-    starElement.classList.add('full-star');
-    starsContainer.appendChild(starElement);
+    starsContainer.appendChild(createStarElement('full'));
   }
 
   if (halfStar) {
-    const starElement = document.createElement('span');
-    starElement.innerHTML = '&#9733;'; 
-    starElement.classList.add('half-star');
-    starsContainer.appendChild(starElement);
+    starsContainer.appendChild(createStarElement('half'));
   }
 
   for (let i = 0; i < emptyStars; i++) {
-    const starElement = document.createElement('span');
-    starElement.innerHTML = '&#9734;'; 
-    starElement.classList.add('empty-star');
-    starsContainer.appendChild(starElement);
+    starsContainer.appendChild(createStarElement('empty'));
   }
 
   return starsContainer.outerHTML;
@@ -81,8 +89,22 @@ const renderMovieHero = async () => {
       openDetailsModal(details);
     });
 
-  } catch (error) {
+  }  catch (error) {
     console.error('Error fetching trending movies:', error);
+
+    const desktopImage = '../images/hero-desktop.jpg';
+    const tabletImage = '../images/hero-tablet.jpg';
+    const mobileImage = '../images/hero-mobile.jpg';
+
+    // Sprawdzenie rozmiaru okna
+    if (window.innerWidth >= 1024) {
+      heroElement.style.backgroundImage = `url(${desktopImage})`;
+    } else if (window.innerWidth >= 768) {
+      heroElement.style.backgroundImage = `url(${tabletImage})`;
+    } else {
+      heroElement.style.backgroundImage = `url(${mobileImage})`;
+    }
+
     heroElement.innerHTML = defaultHeroContent;
   }
 };
