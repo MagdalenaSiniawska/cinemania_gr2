@@ -1,0 +1,45 @@
+      
+     
+ 
+    <section class=" lib-hero">
+        <div class="container lib-hero-container lib-hero">
+          <div class="lib-hero-text-container">
+            <h1 class="title hero-title">Create Your Dream Cinema</h1>
+            <p class="text lib-hero-text">
+              Is a guide to designing a personalized movie theater experience with the
+              right equipment, customized decor, and favorite films. This guide helps
+              you bring the cinema experience into your own home with cozy seating,
+              dim lighting, and movie theater snacks.
+            </p>
+          </div>
+        </div>
+      </section>
+
+
+        <div id="filters">
+            <label for="genre-select">Genre</label>
+            <select id="genre-select">
+            
+
+                <option value="romance">Romance</option>
+                <option value="detective">Detective</option>
+                <option value="thriller">Thriller</option>
+                <option value="action">Action</option>
+           <option value="documentary">Documentary</option>
+           <option value="horror">Horror</option>
+            </select>
+        </div>
+
+        <section id="catalog" class="movies-list">
+        <button id="loadMore">Load More</button>
+        </section>
+
+        <section class="empty-library" id="empty-library" style="display: none;">
+            <h2>OOPS...</h2>
+            <p>You dont have any movies at your library.</p>
+            <button onclick="searchMovie()">Search Movie</button>
+        </section>
+
+        <script src="catalog.js"></script>
+        <script src="js.library.js"></script>
+       
