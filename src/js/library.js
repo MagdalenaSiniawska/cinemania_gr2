@@ -1,8 +1,6 @@
 import {
     getTrending,
-    searchFilm,
-    getGenres,
-    createElement
+    searchFilm
   } from './API.js';
   
   const form = document.querySelector('#searchForm');
