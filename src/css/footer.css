@@ -1,0 +1,149 @@
+.footer {
+  display: flex;
+  align-self: flex-end;
+  justify-content: center;
+  align-items: center;
+  background-color: #111111;
+  height: 100px;
+  margin: 28px auto;
+  color: #b7b7b7;
+}
+
+.footer-text-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-paragraph {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  text-align: center;
+}
+.footer-paragraph a {
+  color: #b7b7b7;
+}
+.team-link {
+  color: #545454;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.icon-heart {
+  fill: #ff6b08;
+  height: 16px;
+  width: 16px;
+}
+.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-team-backdrop {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.modal-team-container {
+  overflow-y: scroll;
+  overflow: hidden;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: #ffffff;
+  color: #111111;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 38px;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  border-radius: 8px;
+}
+
+.modal-team-content {
+  background-color: #111;
+  border: solid 1px #b7b7b7;
+  border-radius: 8px;
+  color: #b7b7b7;
+  font-size: 14px;
+  padding-bottom: 30px;
+  padding-left: 12px;
+  width: 325px;
+}
+
+.modal-team-close {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 2em;
+  padding: 0.5em;
+}
+
+.icon-close {
+  fill: #ffffff;
+  transition: transform 250ms ease;
+}
+
+.icon-close:hover,
+.icon-close:focus,
+.icon-close:active {
+  transform: scale(1.3);
+}
+
+.modal-credits {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  letter-spacing: 0.02em;
+}
+
+.modal-credits-person {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-credits-name {
+  text-align: center;
+  width: 50%;
+}
+
+.modal-credits-role {
+  text-align: center;
+  width: 50%;
+}
+@media screen and (min-width: 768px) {
+  .footer {
+    height: 79px;
+    margin: 40px auto;
+  }
+  .footer-paragraph {
+    font-size: 19px;
+  }
+  .footer-text-wrap {
+    display: flex;
+    flex-direction: row;
+  }
+  .icon-heart {
+    height: 16px;
+    width: 16px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .footer {
+    margin: 80px auto;
+    height: 77px;
+  }
+}
