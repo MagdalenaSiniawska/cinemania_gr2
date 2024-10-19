@@ -18,20 +18,6 @@ export const getUpcoming = async () => {
   return response.data;
 };
 
-//wyszukiwanie filmów
-
-//przykładowe searchParams, do zmiany na input value jak już będzie przygotowana strona;
-const searchParams = new URLSearchParams({
-  query: 'Deadpool',
-  primary_release_year: 2024,
-  page: 1,
-});
-
-export const searchFilm = async () => {
-  const response = await axios.get(`/search/movie?${searchParams}`);
-  return response.data;
-};
-
 //pozyskiwanie szczegółów
 export const getDetails = async movie_id => {
   const response = await axios.get(`/movie/${movie_id}`);
@@ -66,16 +52,20 @@ export const convertGenreIdsToNames = async genreIds => {
 
 //kraje
 export const getCountries = async () => {
-  const response = await axios.get(`/configuration/countries`);
-  return response.data;
-};
-
-//logowanie danych do konsoli
-export const logData = async fn => {
   try {
-    const data = await fn;
-    console.log(data);
+    const response = await axios.get(`/configuration/countries`);
+    return response.data;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
+
+// //logowanie danych do konsoli
+// export const logData = async fn => {
+//   try {
+//     const data = await fn;
+//     console.log(data);
+//   } catch (error) {
+//     console.log(error.message);
+//   }
+// };
