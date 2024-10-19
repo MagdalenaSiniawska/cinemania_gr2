@@ -1,6 +1,8 @@
-import { getTrending } from './API.js';
+import { getTrending, getDetails } from './API.js';
 
 import { element, createElement } from './card_creator.js';
+
+import { openDetailsModal } from './hero_modals.js';
 
 import axios from 'axios';
 
@@ -206,3 +208,13 @@ inputClear.addEventListener('click', e => {
   inputClear.style.display = 'none';
   pagination.style.display = 'none';
 });
+
+// filmList.addEventListener('click', e => {
+//   e.preventDefault();
+//   if (!e.target.classList.contains('card-poster')) return;
+
+//   async () => {
+//     const details = await getDetails(movie.id);
+//     openDetailsModal(details);
+//   };
+// });
