@@ -76,7 +76,16 @@ const createPagination = async () => {
       textContent: '<',
     });
     prevEl.append(prevButton);
-    pagination.append(prevEl);
+    pagination.prepend(prevEl);
+
+    const listEl = element('li', {
+      classList: 'pagination-item',
+    });
+    const pageList = element('ul', {
+      classList: 'page-list',
+    });
+    listEl.append(pageList);
+    pagination.append(listEl);
 
     for (let i = 1; i <= response.total_pages; i++) {
       const listEl = element('li', {
@@ -87,7 +96,7 @@ const createPagination = async () => {
         textContent: i,
       });
       listEl.append(pageButton);
-      pagination.append(listEl);
+      pageList.append(listEl);
     }
 
     const nextEl = element('li', {
@@ -109,19 +118,31 @@ form.addEventListener('submit', e => {
   e.preventDefault();
 
   if (input.value !== '') {
+    filmList.innerHTML = '';
+    pagination.innerHTML = '';
+    pagination.style.display = 'flex';
+
     (async () => {
       currentPage = 1;
-      filmList.innerHTML = '';
-      pagination.innerHTML = '';
+
       await search();
+
+      if (filmList.childElementCount === 0) {
+        pagination.style.display = 'none';
+        catalog.innerHTML =
+          '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
+      }
+
       await createPagination();
+      const pageList = document.querySelector('.page-list');
+      pageList.style.display = 'flex';
       const prevButton = document.querySelector('#previous-page');
       const nextButton = document.querySelector('#next-page');
-      const totalPages = pagination.childElementCount - 2;
+      const totalPages = pageList.childElementCount;
+
       const pageBtns = Array.from(
         document.querySelectorAll('.pagination-btn')
       ).slice(1, -1);
-
       pageBtns.forEach(button => {
         button.addEventListener('click', () => {
           currentPage = button.textContent;
@@ -183,5 +204,5 @@ form.addEventListener('submit', e => {
 
 inputClear.addEventListener('click', e => {
   inputClear.style.display = 'none';
-  pagination.innerHTML = '';
+  pagination.style.display = 'none';
 });
