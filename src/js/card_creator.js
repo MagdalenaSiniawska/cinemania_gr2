@@ -1,6 +1,6 @@
 import { convertGenreIdsToNames } from './API.js';
 
-const element = (tag, props) =>
+export const element = (tag, props) =>
   Object.assign(document.createElement(tag), props);
 
 export const createElement = ({
