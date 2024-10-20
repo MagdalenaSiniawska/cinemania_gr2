@@ -1,0 +1,72 @@
+/* Formularz wyszukiwania */
+#searchForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+    gap: 10px;
+}
+
+/* Karty filmów */
+#film-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card {
+    position: relative;
+    width: 200px;
+    height: 300px;
+    border-radius: 5px;
+    overflow: hidden;
+    /* Aby napisy nie wychodziły poza obrazek */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Obrazek filmu */
+.card-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* Tytuł filmu w lewym dolnym rogu */
+.card-title {
+    position: absolute;
+    bottom: 40px;
+    /* Dostosowanie odległości tytułu od dołu */
+    left: 10px;
+    font-size: 18px;
+    color: white;
+    background: rgba(0, 0, 0, 0.6);
+    /* Półprzezroczyste tło */
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+/* Dodatkowy opis pod tytułem */
+.card-description {
+    position: absolute;
+    bottom: 10px;
+    /* Dostosowanie odległości od dołu */
+    left: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.card-description-element {
+    color: white;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
