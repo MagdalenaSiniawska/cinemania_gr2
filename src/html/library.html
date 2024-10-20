@@ -8,8 +8,9 @@
   </head>
   <body>
     <header>
-      <a href="../home.html">index</a>
-      <a href="../catalog.html">catalog</a>
+      <a href="../index.html">Home</a>
+      <a href="./catalog.html">Catalog</a>
+      <a href="">My Library</a>
     </header>
     <main>
       <section class="lib-hero">
@@ -25,10 +26,15 @@
           </div>
         </div>
       </section>
+      <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Search movie..." />
+        <button type="submit">Search</button>
+      </form>
 
       <div id="filters">
         <label for="genre-select">Genre</label>
         <select id="genre-select">
+          <option value="all">All</option>
           <option value="romance">Romance</option>
           <option value="detective">Detective</option>
           <option value="thriller">Thriller</option>
@@ -45,7 +51,7 @@
       <section class="empty-library" id="empty-library" style="display: none">
         <h2>OOPS...</h2>
         <p>You dont have any movies at your library.</p>
-        <button onclick="searchMovie()">Search Movie</button>
+        <a href="./catalog.html"><button id="searchMovieBtn">Search Movie</button>
       </section>
     </main>
     <footer></footer>

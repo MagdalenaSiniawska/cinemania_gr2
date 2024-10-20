@@ -21,12 +21,30 @@ inputClear.style.display = 'none';
 
 const renderElements = (films, rootList, callback) => {
   const fragment = document.createDocumentFragment();
-  fragment.append(...films.map(callback));
+  
+  fragment.append(...films.map(film => {
+    const filmElement = callback(film);
+    console.log('Film element:', filmElement);
+    
+    filmElement.addEventListener('click', async (e) => {
+    if (e.target.classList.contains('card-poster')) {
+      try {
+        const details = await getDetails(film.id);
+        console.log('Fetched details:', details); // Logowanie
+        openDetailsModal(details);
+      } catch (error) {
+        console.log('Error fetching movie details:', error);
+      }
+    }
+  });
+
+    return filmElement;
+  }));
 
   rootList.append(fragment);
 };
 
-(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
   try {
     const response = await getTrending('day');
     renderElements(response.results, filmList, createElement);
@@ -209,12 +227,13 @@ inputClear.addEventListener('click', e => {
   pagination.style.display = 'none';
 });
 
-// filmList.addEventListener('click', e => {
-//   e.preventDefault();
-//   if (!e.target.classList.contains('card-poster')) return;
+// // filmList.addEventListener('click', e => {
+// //   e.preventDefault();
+// //   if (!e.target.classList.contains('card-poster')) return;
 
-//   async () => {
-//     const details = await getDetails(movie.id);
-//     openDetailsModal(details);
-//   };
-// });
+// //   async () => {
+// //     const details = await getDetails(movie.id);
+// //     openDetailsModal(details);
+// //   };
+// // });
+  

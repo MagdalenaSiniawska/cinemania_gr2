@@ -1,83 +1,150 @@
-import { getTrending, searchFilm } from './API.js';
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#searchForm');
+    const catalog = document.querySelector('#catalog');
+    const genreSelect = document.querySelector('#genre-select');
+    const loadMoreBtn = document.querySelector('#load-more');
 
-import { createElement } from './card_creator.js';
+    let displayedMovies = 0;
+    const moviesPerPage = 6;
+    let allMovies = [];
 
-const form = document.querySelector('#searchForm');
-const catalog = document.querySelector('#catalog');
-const genreSelect = document.querySelector('#genre-select');
-const loadMoreBtn = document.querySelector('#load-more');
-console.log(`load more: ${loadMoreBtn}`);
+    // Funkcja pomocnicza tworzenia elementu gwiazdki
+    const createStarElement = (type) => {
+        const starElement = document.createElement('span');
+        starElement.classList.add(`${type}-star`);
+        
+        starElement.innerHTML = '&#9733;'; // Pełna gwiazdka
 
-let displayedMovies = 0;
-const moviesPerPage = 6;
-let allMovies = [];
+        if (type === 'empty') {
+            starElement.innerHTML = '&#9734;'; // Pusta gwiazdka
+        }
 
-// Function to render elements
-const renderElements = (films, rootList) => {
-  const fragment = document.createDocumentFragment();
-  fragment.append(...films.map(createElement));
-  rootList.append(fragment);
-};
+        return starElement;
+    };
 
-// Fetch trending movies and render on page load
-(async () => {
-  try {
-    const response = await getTrending('day');
-    allMovies = response.results;
-    renderElements(allMovies.slice(0, moviesPerPage), catalog);
-    displayedMovies += moviesPerPage;
-  } catch (error) {
-    console.log(error);
-  }
-})();
+    // Wyświetlanie gwiazdek jako rating
+    const displayStarRating = (rating) => {
+        console.log(`Rating dla filmu: ${rating}`);
 
-// Load More functionality
-loadMoreBtn.addEventListener('click', () => {
-  const moreMovies = allMovies.slice(
-    displayedMovies,
-    displayedMovies + moviesPerPage
-  );
-  renderElements(moreMovies, catalog);
-  displayedMovies += moreMovies.length;
+        const starsContainer = document.createElement('div');
+        starsContainer.classList.add('star-rating');
 
-  // Hide Load More button if all movies are displayed
-  if (displayedMovies >= allMovies.length) {
-    loadMoreBtn.style.display = 'none';
-  }
-});
+        // Przekształcenie z skali 0-10 do 0-5
+        const normalizedRating = rating / 2;
 
-// Search functionality
-form.addEventListener('submit', async e => {
-  e.preventDefault();
-  const searchQuery = document.querySelector('#searchInput').value;
-  if (searchQuery) {
-    try {
-      const response = await searchFilm(searchQuery);
-      catalog.innerHTML = '';
-      allMovies = response.results;
-      displayedMovies = 0;
-      renderElements(allMovies.slice(0, moviesPerPage), catalog);
-      displayedMovies += moviesPerPage;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-});
+        const fullStars = Math.floor(normalizedRating);
+        const halfStar = (normalizedRating % 1) >= 0.5 ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
 
-// Filter by genre
-genreSelect.addEventListener('change', e => {
-  const selectedGenre = e.target.value;
-  let filteredMovies;
+        for (let i = 0; i < fullStars; i++) {
+            starsContainer.appendChild(createStarElement('full'));
+        }
 
-  if (selectedGenre === 'all') {
-    filteredMovies = allMovies;
-  } else {
-    filteredMovies = allMovies.filter(movie =>
-      movie.genre_ids.includes(Number(selectedGenre))
-    );
-  }
+        if (halfStar) {
+            starsContainer.appendChild(createStarElement('half'));
+        }
 
-  catalog.innerHTML = ''; // Clear current movies
-  renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
-  displayedMovies = moviesPerPage;
+        for (let i = 0; i < emptyStars; i++) {
+            starsContainer.appendChild(createStarElement('empty'));
+        }
+
+        return starsContainer.outerHTML;
+    };
+
+    // Funkcja do renderowania elementów
+    const renderElements = (films, rootList) => {
+        const fragment = document.createDocumentFragment();
+
+        films.forEach(film => {
+            const filmElement = document.createElement('div');
+            filmElement.classList.add('film-card');
+
+            // Użyj vote_average jako ratingu
+            const rating = film.vote_average;
+
+            filmElement.innerHTML = `
+                <img src="${film.poster || ''}" alt="${film.title || ''} poster" class="film-poster"/>
+                <h3>${film.title || ''}</h3>
+                <p>Genre: ${Array.isArray(film.genres) && film.genres.length > 0 ? film.genres.join(', ') : 'N/A'}</p>
+                <p>Year: ${film.year || ''}</p>
+                <p>${displayStarRating(rating) || ''}</p> <!-- Użyj vote_average jako rating -->
+            `;
+            fragment.appendChild(filmElement);
+        });
+
+        rootList.append(fragment);
+        console.log('Appended elements to catalog:', rootList);
+    };
+
+    // Fetch dla filmów zapisanych w localStorage
+    const getMoviesFromLibrary = () => {
+        const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+        console.log('Movies from localStorage:', myLibrary);
+        return Array.isArray(myLibrary) ? myLibrary : [];
+    };
+
+    // Pobranie i wyświetlenie filmów z localStorage
+    const loadSavedMovies = () => {
+        allMovies = getMoviesFromLibrary();
+        console.log('Loaded movies from library:', allMovies);
+        catalog.innerHTML = '';
+
+        if (!Array.isArray(allMovies) || allMovies.length === 0) {
+            console.warn('No movies found in library or library is not an array.');
+            return;
+        }
+
+        renderElements(allMovies.slice(0, moviesPerPage), catalog);
+        displayedMovies = Math.min(moviesPerPage, allMovies.length);
+
+        loadMoreBtn.style.display = displayedMovies >= allMovies.length ? 'none' : 'block';
+    };
+
+    // Funkcjonalność Load More
+    loadMoreBtn.addEventListener('click', () => {
+        const moreMovies = allMovies.slice(displayedMovies, displayedMovies + moviesPerPage);
+        renderElements(moreMovies, catalog);
+        displayedMovies += moreMovies.length;
+
+        loadMoreBtn.style.display = displayedMovies >= allMovies.length ? 'none' : 'block';
+    });
+
+    // Funkcjonalność Search dla zapisanych filmów
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        const searchQuery = document.querySelector('#searchInput').value.toLowerCase();
+        if (searchQuery) {
+            const filteredMovies = allMovies.filter(movie =>
+                movie.title.toLowerCase().includes(searchQuery)
+            );
+            catalog.innerHTML = '';
+            renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
+            displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
+
+            loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
+        }
+    });
+
+    // Filtrowanie po kategorii wśród zapisanych filmów
+    genreSelect.addEventListener('change', e => {
+        const selectedGenre = e.target.value;
+        let filteredMovies;
+
+        if (selectedGenre === 'all') {
+            filteredMovies = allMovies;
+        } else {
+            filteredMovies = allMovies.filter(movie =>
+                movie.genres.includes(selectedGenre)
+            );
+        }
+
+        catalog.innerHTML = '';
+        renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
+        displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
+
+        loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
+    });
+
+    // Ładowanie zapisanych filmów po załadowaniu strony
+    loadSavedMovies();
 });

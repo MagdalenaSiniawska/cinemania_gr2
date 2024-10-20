@@ -1,0 +1,40 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    /* Tło z przezroczystością */
+    display: none;
+    /* Ukryty domyślnie */
+    visibility: hidden;
+    /* Ukryty */
+    opacity: 0;
+    /* Ukryty */
+    transition: opacity 0.3s ease;
+    /* Płynne przejście */
+    z-index: 1000;
+    /* Upewnij się, że modal jest na wierzchu */
+}
+
+.modal.show {
+    display: block;
+    /* Wyświetl modal */
+    visibility: visible;
+    /* Widoczny */
+    opacity: 1;
+    /* Widoczny */
+}
+
+.modal-content {
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    max-width: 600px;
+    border-radius: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Wyśrodkowanie */
+}

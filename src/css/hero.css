@@ -1,36 +1,110 @@
+.hero {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: left;
+}
+
+
+.h1, h2{
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 37.5px;
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-bottom: 0;
+}
+
 .star-rating {
     display: flex;
     gap: 5px;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 .full-star,
 .empty-star,
 .half-star {
     font-size: 24px;
-    color: gold;
+    color: rgba(248, 119, 25, 1);
     position: relative;
 }
 
 .empty-star {
-    color: lightgray;
+    color: rgba(248, 119, 25, 1);
     /* Puste gwiazdki będą miały inny kolor */
 }
 
 .half-star {
-    color: lightgray;
+    color: rgba(248, 119, 25, 1);
     /* Najpierw wyświetlamy pustą gwiazdkę */
 }
 
 .half-star::before {
     content: '★';
-    /* Dodajemy pełną gwiazdkę */
     position: absolute;
     left: 0;
     top: 0;
     width: 50%;
     /* Zabarwiamy tylko lewą połowę */
     overflow: hidden;
-    color: gold;
+    color: rgba(248, 119, 25, 1);
     /* Kolor dla zakolorowanej połowy */
 }
 
+.hero-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 49px;
+    width: 254px;
+    padding-left: 20px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+#watch-trailer {
+    background-color: rgba(248, 119, 25, 1);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    margin-right: 10px;
+    margin-left: 20px;
+    margin-bottom: 54px;
+    transition: background-color 0.3s ease;
+}
+
+#watch-trailer:hover {
+    background-color: white;
+    color: rgba(248, 119, 25, 1);
+    border-color: 1px rgba(248, 119, 25, 1) solid;
+}
+
+#more-details {
+    background-color: transparent;
+    color: white;
+    border: 1px white solid;
+    padding: 12px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+}
+
+#more-details:hover{
+    background-color: transparent;
+    color: rgba(248, 119, 25, 1);
+    border-color: 1px rgba(248, 119, 25, 1) solid;
+}
