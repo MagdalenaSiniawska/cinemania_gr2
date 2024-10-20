@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('#searchForm');
     const catalog = document.querySelector('#catalog');
     const genreSelect = document.querySelector('#genre-select');
     const loadMoreBtn = document.querySelector('#load-more');
@@ -7,29 +6,35 @@ document.addEventListener('DOMContentLoaded', () => {
     let displayedMovies = 0;
     const moviesPerPage = 6;
     let allMovies = [];
+    let filteredMovies = []; // Zmienna do przechowywania przefiltrowanych filmów
 
-    // Funkcja pomocnicza tworzenia elementu gwiazdki
+    // Lista gatunków (w małych literach)
+    const genres = ['action', 'drama', 'comedy', 'horror', 'thriller'];
+
+    const populateGenres = () => {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = 'all';
+        defaultOption.textContent = 'Genre';
+        genreSelect.appendChild(defaultOption);
+
+        genres.forEach(genre => {
+            const option = document.createElement('option');
+            option.value = genre;
+            option.textContent = genre.charAt(0).toUpperCase() + genre.slice(1);
+            genreSelect.appendChild(option);
+        });
+    };
+
     const createStarElement = (type) => {
         const starElement = document.createElement('span');
         starElement.classList.add(`${type}-star`);
-        
-        starElement.innerHTML = '&#9733;'; // Pełna gwiazdka
-
-        if (type === 'empty') {
-            starElement.innerHTML = '&#9734;'; // Pusta gwiazdka
-        }
-
+        starElement.innerHTML = type === 'empty' ? '&#9734;' : '&#9733;';
         return starElement;
     };
 
-    // Wyświetlanie gwiazdek jako rating
     const displayStarRating = (rating) => {
-        console.log(`Rating dla filmu: ${rating}`);
-
         const starsContainer = document.createElement('div');
         starsContainer.classList.add('star-rating');
-
-        // Przekształcenie z skali 0-10 do 0-5
         const normalizedRating = rating / 2;
 
         const fullStars = Math.floor(normalizedRating);
@@ -51,100 +56,74 @@ document.addEventListener('DOMContentLoaded', () => {
         return starsContainer.outerHTML;
     };
 
-    // Funkcja do renderowania elementów
-    const renderElements = (films, rootList) => {
+    const renderMovies = (movies, container) => {
         const fragment = document.createDocumentFragment();
 
-        films.forEach(film => {
-            const filmElement = document.createElement('div');
-            filmElement.classList.add('film-card');
+        movies.forEach(movie => {
+            const movieElement = document.createElement('div');
+            movieElement.classList.add('film-card');
 
-            // Użyj vote_average jako ratingu
-            const rating = film.vote_average;
+            const rating = movie.vote_average;
 
-            filmElement.innerHTML = `
-                <img src="${film.poster || ''}" alt="${film.title || ''} poster" class="film-poster"/>
-                <h3>${film.title || ''}</h3>
-                <p>Genre: ${Array.isArray(film.genres) && film.genres.length > 0 ? film.genres.join(', ') : 'N/A'}</p>
-                <p>Year: ${film.year || ''}</p>
-                <p>${displayStarRating(rating) || ''}</p> <!-- Użyj vote_average jako rating -->
+            movieElement.innerHTML = `
+                <img src="${movie.poster || ''}" alt="${movie.title || ''} poster" class="film-poster"/>
+                <h3>${movie.title || ''}</h3>
+                <p>Genre: ${Array.isArray(movie.genres) && movie.genres.length > 0 ? movie.genres.join(', ') : 'N/A'}</p>
+                <p>Year: ${movie.year || ''}</p>
+                <p>${displayStarRating(rating) || ''}</p>
             `;
-            fragment.appendChild(filmElement);
+            fragment.appendChild(movieElement);
         });
 
-        rootList.append(fragment);
-        console.log('Appended elements to catalog:', rootList);
+        container.append(fragment);
     };
 
-    // Fetch dla filmów zapisanych w localStorage
-    const getMoviesFromLibrary = () => {
+    const fetchMoviesFromLibrary = () => {
         const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
-        console.log('Movies from localStorage:', myLibrary);
         return Array.isArray(myLibrary) ? myLibrary : [];
     };
 
-    // Pobranie i wyświetlenie filmów z localStorage
-    const loadSavedMovies = () => {
-        allMovies = getMoviesFromLibrary();
-        console.log('Loaded movies from library:', allMovies);
+    const loadMovies = () => {
+        allMovies = fetchMoviesFromLibrary();
         catalog.innerHTML = '';
+        filteredMovies = allMovies; // Na początku wyświetlamy wszystkie filmy
 
         if (!Array.isArray(allMovies) || allMovies.length === 0) {
             console.warn('No movies found in library or library is not an array.');
             return;
         }
 
-        renderElements(allMovies.slice(0, moviesPerPage), catalog);
-        displayedMovies = Math.min(moviesPerPage, allMovies.length);
+        renderMovies(filteredMovies.slice(0, moviesPerPage), catalog);
+        displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
 
-        loadMoreBtn.style.display = displayedMovies >= allMovies.length ? 'none' : 'block';
+        loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
     };
 
-    // Funkcjonalność Load More
     loadMoreBtn.addEventListener('click', () => {
-        const moreMovies = allMovies.slice(displayedMovies, displayedMovies + moviesPerPage);
-        renderElements(moreMovies, catalog);
+        const moreMovies = filteredMovies.slice(displayedMovies, displayedMovies + moviesPerPage);
+        renderMovies(moreMovies, catalog);
         displayedMovies += moreMovies.length;
 
-        loadMoreBtn.style.display = displayedMovies >= allMovies.length ? 'none' : 'block';
-    });
-
-    // Funkcjonalność Search dla zapisanych filmów
-    form.addEventListener('submit', e => {
-        e.preventDefault();
-        const searchQuery = document.querySelector('#searchInput').value.toLowerCase();
-        if (searchQuery) {
-            const filteredMovies = allMovies.filter(movie =>
-                movie.title.toLowerCase().includes(searchQuery)
-            );
-            catalog.innerHTML = '';
-            renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
-            displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
-
-            loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
-        }
+        loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
     });
 
     // Filtrowanie po kategorii wśród zapisanych filmów
     genreSelect.addEventListener('change', e => {
         const selectedGenre = e.target.value;
-        let filteredMovies;
 
-        if (selectedGenre === 'all') {
-            filteredMovies = allMovies;
-        } else {
-            filteredMovies = allMovies.filter(movie =>
-                movie.genres.includes(selectedGenre)
-            );
-        }
+        // Filtrowanie filmów
+        filteredMovies = allMovies.filter(movie => {
+            return selectedGenre === 'all' || movie.genres.map(g => g.toLowerCase()).includes(selectedGenre);
+        });
 
         catalog.innerHTML = '';
-        renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
+        renderMovies(filteredMovies.slice(0, moviesPerPage), catalog);
         displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
 
         loadMoreBtn.style.display = displayedMovies >= filteredMovies.length ? 'none' : 'block';
     });
 
     // Ładowanie zapisanych filmów po załadowaniu strony
-    loadSavedMovies();
+    populateGenres(); // Dodaj gatunki do selecta
+    loadMovies();
 });

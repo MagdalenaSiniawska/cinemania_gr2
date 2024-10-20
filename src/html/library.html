@@ -1,60 +1,53 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
-    <title>My-library</title>
-  </head>
-  <body>
-    <header>
-      <a href="../index.html">Home</a>
-      <a href="./catalog.html">Catalog</a>
-      <a href="">My Library</a>
-    </header>
-    <main>
-      <section class="lib-hero">
-        <div class="container lib-hero-container lib-hero">
-          <div class="lib-hero-text-container">
-            <h1 class="title hero-title">Create Your Dream Cinema</h1>
-            <p class="text lib-hero-text">
-              Is a guide to designing a personalized movie theater experience
-              with the right equipment, customized decor, and favorite films.
-              This guide helps you bring the cinema experience into your own
-              home with cozy seating, dim lighting, and movie theater snacks.
-            </p>
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+  <title>My-library</title>
+</head>
+
+<body>
+  <header>
+    <a href="../index.html">Home</a>
+    <a href="./catalog.html">Catalog</a>
+    <a href="">My Library</a>
+  </header>
+  <main>
+    <section class="lib-hero">
+      <div class="container lib-hero-container lib-hero">
+        <div class="lib-hero-text-container">
+          <h1 class="title hero-title">Create Your Dream Cinema</h1>
+          <p class="text lib-hero-text">
+            Is a guide to designing a personalized movie theater experience
+            with the right equipment, customized decor, and favorite films.
+            This guide helps you bring the cinema experience into your own
+            home with cozy seating, dim lighting, and movie theater snacks.
+          </p>
         </div>
-      </section>
-      <form id="searchForm">
-        <input type="text" id="searchInput" placeholder="Search movie..." />
-        <button type="submit">Search</button>
-      </form>
-
-      <div id="filters">
-        <label for="genre-select">Genre</label>
-        <select id="genre-select">
-          <option value="all">All</option>
-          <option value="romance">Romance</option>
-          <option value="detective">Detective</option>
-          <option value="thriller">Thriller</option>
-          <option value="action">Action</option>
-          <option value="documentary">Documentary</option>
-          <option value="horror">Horror</option>
-        </select>
       </div>
+    </section>
 
-      <section id="catalog" class="movies-list">
-        <button id="load-more">Load More</button>
-      </section>
+    <div id="filters">
+      <select id="genre-select">
+        <!-- Opcje gatunków zostaną dodane w JavaScript -->
+      </select>
+    </div>
 
-      <section class="empty-library" id="empty-library" style="display: none">
-        <h2>OOPS...</h2>
-        <p>You dont have any movies at your library.</p>
-        <a href="./catalog.html"><button id="searchMovieBtn">Search Movie</button>
-      </section>
-    </main>
-    <footer></footer>
-    <script type="module" src="../js/library.js"></script>
-  </body>
+    <section id="catalog" class="movies-list" aria-labelledby="catalog-header">
+      <h2 id="catalog-header">Movie Catalog</h2>
+      <button id="load-more">Load More</button>
+    </section>
+
+    <section class="empty-library" id="empty-library" style="display: none">
+      <h2>OOPS...</h2>
+      <p>You don't have any movies in your library.</p>
+      <a href="./catalog.html"><button id="searchMovieBtn">Search Movie</button></a>
+    </section>
+  </main>
+  <footer></footer>
+  <script type="module" src="../js/library.js"></script>
+</body>
+
 </html>

@@ -110,3 +110,4 @@ const renderMovieHero = async () => {
 };
 
 renderMovieHero();
+

@@ -1,11 +1,7 @@
 import { getTrending, getDetails } from './API.js';
-
 import { element, createElement } from './card_creator.js';
-
 import { openDetailsModal } from './hero_modals.js';
-
 import axios from 'axios';
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -19,24 +15,26 @@ const pagination = document.querySelector('#pagination');
 pagination.style.display = 'flex';
 inputClear.style.display = 'none';
 
+let currentPage = 1;
+const API_KEY = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2IxMWQ4ZGE0NTZlOGI5OTIxM2EyNDk4ODM4OGQyNSIsIm5iZiI6MTcyODcyMDEzMC44MDY0Niwic3ViIjoiNjcwYTJiNDEzYmI0NTU3YzY2OWFmYzM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Pgojbxf9JKo_J1qf6Qmglon5qZgkr9wpZ4I978dGQU8';
+axios.defaults.baseURL = 'https://api.themoviedb.org/3';
+axios.defaults.headers.common['Authorization'] = API_KEY;
+
 const renderElements = (films, rootList, callback) => {
   const fragment = document.createDocumentFragment();
-  
   fragment.append(...films.map(film => {
     const filmElement = callback(film);
-    console.log('Film element:', filmElement);
     
     filmElement.addEventListener('click', async (e) => {
-    if (e.target.classList.contains('card-poster')) {
-      try {
-        const details = await getDetails(film.id);
-        console.log('Fetched details:', details); // Logowanie
-        openDetailsModal(details);
-      } catch (error) {
-        console.log('Error fetching movie details:', error);
+      if (e.target.classList.contains('card-poster')) {
+        try {
+          const details = await getDetails(film.id);
+          openDetailsModal(details);
+        } catch (error) {
+          console.log('Error fetching movie details:', error);
+        }
       }
-    }
-  });
+    });
 
     return filmElement;
   }));
@@ -44,7 +42,7 @@ const renderElements = (films, rootList, callback) => {
   rootList.append(fragment);
 };
 
-document.addEventListener('DOMContentLoaded', async () => {
+const fetchTrendingMovies = async () => {
   try {
     const response = await getTrending('day');
     renderElements(response.results, filmList, createElement);
@@ -53,13 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
     console.log(error);
   }
-})();
-
-let currentPage = 1;
-const API_KEY =
-  'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2IxMWQ4ZGE0NTZlOGI5OTIxM2EyNDk4ODM4OGQyNSIsIm5iZiI6MTcyODcyMDEzMC44MDY0Niwic3ViIjoiNjcwYTJiNDEzYmI0NTU3YzY2OWFmYzM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Pgojbxf9JKo_J1qf6Qmglon5qZgkr9wpZ4I978dGQU8';
-axios.defaults.baseURL = 'https://api.themoviedb.org/3';
-axios.defaults.headers.common['Authorization'] = API_KEY;
+};
 
 const searchMovies = async () => {
   try {
@@ -78,18 +70,18 @@ const searchMovies = async () => {
 const search = async () => {
   try {
     const response = await searchMovies();
+    console.log('Search response:', response); // Logowanie odpowiedzi
     renderElements(response.results, filmList, createElement);
   } catch (error) {
-    console.log(error);
+    console.log('Error in search:', error);
   }
 };
 
+// Funkcja do tworzenia paginacji
 const createPagination = async () => {
   try {
     const response = await searchMovies();
-    const prevEl = element('li', {
-      classList: 'pagination-item',
-    });
+    const prevEl = element('li', { classList: 'pagination-item' });
     const prevButton = element('button', {
       classList: 'pagination-btn prev-page',
       id: 'previous-page',
@@ -98,19 +90,13 @@ const createPagination = async () => {
     prevEl.append(prevButton);
     pagination.prepend(prevEl);
 
-    const listEl = element('li', {
-      classList: 'pagination-item',
-    });
-    const pageList = element('ul', {
-      classList: 'page-list',
-    });
+    const listEl = element('li', { classList: 'pagination-item' });
+    const pageList = element('ul', { classList: 'page-list' });
     listEl.append(pageList);
     pagination.append(listEl);
 
     for (let i = 1; i <= response.total_pages; i++) {
-      const listEl = element('li', {
-        classList: 'pagination-item',
-      });
+      const listEl = element('li', { classList: 'pagination-item' });
       const pageButton = element('button', {
         classList: 'pagination-btn',
         textContent: i,
@@ -119,9 +105,7 @@ const createPagination = async () => {
       pageList.append(listEl);
     }
 
-    const nextEl = element('li', {
-      classList: 'pagination-item',
-    });
+    const nextEl = element('li', { classList: 'pagination-item' });
     const nextButton = element('button', {
       classList: 'pagination-btn next-page',
       id: 'next-page',
@@ -134,86 +118,63 @@ const createPagination = async () => {
   }
 };
 
+document.addEventListener('DOMContentLoaded', fetchTrendingMovies);
+
 form.addEventListener('submit', e => {
   e.preventDefault();
-
   if (input.value !== '') {
     filmList.innerHTML = '';
     pagination.innerHTML = '';
     pagination.style.display = 'flex';
-
     (async () => {
       currentPage = 1;
-
       await search();
-
       if (filmList.childElementCount === 0) {
         pagination.style.display = 'none';
         catalog.innerHTML =
           '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
       }
-
       await createPagination();
       const pageList = document.querySelector('.page-list');
       pageList.style.display = 'flex';
       const prevButton = document.querySelector('#previous-page');
       const nextButton = document.querySelector('#next-page');
       const totalPages = pageList.childElementCount;
-
       const pageBtns = Array.from(
         document.querySelectorAll('.pagination-btn')
       ).slice(1, -1);
+
       pageBtns.forEach(button => {
         button.addEventListener('click', () => {
           currentPage = button.textContent;
           filmList.innerHTML = '';
           search();
-
-          if (currentPage == totalPages) {
-            nextButton.disabled = true;
-          } else {
-            nextButton.disabled = false;
-          }
-
-          if (currentPage == 1) {
-            prevButton.disabled = true;
-          } else {
-            prevButton.disabled = false;
-          }
+          prevButton.disabled = currentPage == 1;
+          nextButton.disabled = currentPage == totalPages;
         });
       });
 
       prevButton.disabled = true;
-
       if (totalPages === 1) {
         nextButton.disabled = true;
       }
 
-      prevButton.addEventListener('click', e => {
+      prevButton.addEventListener('click', () => {
         currentPage--;
         filmList.innerHTML = '';
         search();
-        if (currentPage === 1) {
-          prevButton.disabled = true;
-        }
-        if (currentPage < totalPages) {
-          nextButton.disabled = false;
-        }
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
       });
 
-      nextButton.addEventListener('click', e => {
+      nextButton.addEventListener('click', () => {
         currentPage++;
         filmList.innerHTML = '';
         search();
-        if (currentPage > 1) {
-          prevButton.disabled = false;
-        }
-        if (currentPage === totalPages) {
-          nextButton.disabled = true;
-        }
+        prevButton.disabled = currentPage === 1;
+        nextButton.disabled = currentPage === totalPages;
       });
     })();
-
     inputClear.style.display = 'inline';
   } else {
     iziToast.info({
@@ -225,15 +186,5 @@ form.addEventListener('submit', e => {
 inputClear.addEventListener('click', e => {
   inputClear.style.display = 'none';
   pagination.style.display = 'none';
+  input.value = '';
 });
-
-// // filmList.addEventListener('click', e => {
-// //   e.preventDefault();
-// //   if (!e.target.classList.contains('card-poster')) return;
-
-// //   async () => {
-// //     const details = await getDetails(movie.id);
-// //     openDetailsModal(details);
-// //   };
-// // });
-  

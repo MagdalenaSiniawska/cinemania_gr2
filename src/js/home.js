@@ -40,14 +40,16 @@ const renderTrendingMovies = async () => {
       movieElement.classList.add('trending-card');
       movieElement.setAttribute('data-movie-id', movie.id);
 
+      const posterUrl = movie.poster_path 
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+        : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
+      
+      console.log('Poster URL:', posterUrl);
+
       movieElement.innerHTML = `
-        <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${
-        movie.title
-      }">
+        <img src="${posterUrl}" alt="${movie.title}">
         <h3>${movie.title.toUpperCase()}</h3>
-        <p>${genreText} | ${new Date(
-        movie.release_date
-      ).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
+        <p>${genreText} | ${new Date(movie.release_date).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
       `;
 
       movieElement.addEventListener('click', async () => {
@@ -74,7 +76,19 @@ const isMovieInLibrary = movieId => {
 // Dodaje film do biblioteki
 const addMovieToLibrary = movie => {
   const library = JSON.parse(localStorage.getItem('myLibrary')) || [];
-  library.push(movie);
+  const movieToAdd = {
+    id: movie.id,
+    title: movie.title,
+    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+    backdrop_path: movie.backdrop_path,
+    release_date: movie.release_date,
+    vote_average: movie.vote_average,
+    vote_count: movie.vote_count,
+    popularity: movie.popularity,
+    overview: movie.overview,
+    genre_ids: movie.genre_ids
+  };
+  library.push(movieToAdd);
   localStorage.setItem('myLibrary', JSON.stringify(library));
 };
 
@@ -86,11 +100,16 @@ const removeMovieFromLibrary = movieId => {
 };
 
 const handleLibraryToggle = (movie, button) => {
-  if (isMovieInLibrary(movie.id)) {
-    removeMovieFromLibrary(movie.id);
+  const movieWithFullPoster = {
+    ...movie,
+    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+  };
+
+  if (isMovieInLibrary(movieWithFullPoster.id)) {
+    removeMovieFromLibrary(movieWithFullPoster.id);
     button.textContent = 'Add to my library';
   } else {
-    addMovieToLibrary(movie);
+    addMovieToLibrary(movieWithFullPoster);
     button.textContent = 'Remove from my library';
   }
 };
