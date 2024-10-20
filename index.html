@@ -6,7 +6,7 @@
     <title>cinemania_gr2</title>
     <script type="module" crossorigin src="/cinemania_gr2/index.js"></script>
     <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/vendor-CNNbG8jS.js">
-    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/index-U4AEHk2P.css">
+    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/index-503wMIWT.css">
   </head> .
   </head>
   <body>
@@ -27,10 +27,12 @@
 <div id="modal-details" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color:transparent; z-index: 1000;" class="modal">
 </div>
       <div class="container-weekly">
-  <h1 class="h1-home">Weekly Trends</h1>
-  <a href="../html/catalog.html" class="see-all-link">See all</a>
+  <div class="h1-a-weekly">
+    <h1 class="h1-home h1-home-weekly">Weekly Trends</h1>
+    <a href="../html/catalog.html" class="see-all-link">See all</a>
+  </div>
   <div id="trending-container" class="trending-container">
-    <!-- Karty filmów -->
+    <!-- Karty filmów będą tutaj generowane dynamicznie -->
   </div>
 </div>
 
@@ -39,16 +41,37 @@
   <div class="upcoming-movie-card">
     <img id="upcoming-movie-poster" src="" alt="Movie Poster" />
     <div class="upcoming-movie-details">
-      <h2 id="upcoming-movie-title">Movie Title</h2>
-      <p>
-        <strong>Release date:</strong>
-        <span id="upcoming-release-date"></span>
-      </p>
-      <p><strong>Vote / Votes:</strong> <span id="upcoming-vote"></span></p>
-      <p><strong>Popularity:</strong> <span id="upcoming-popularity"></span></p>
-      <p><strong>Genre:</strong> <span id="upcoming-genre"></span></p>
-      <h3>About</h3>
-      <p id="upcoming-overview"></p>
+      <h2 id="upcoming-movie-title" class="upcoming-movie-title">
+        Movie Title
+      </h2>
+      <table class="movie-info-table">
+        <tr>
+          <th>Release date:</th>
+          <td id="upcoming-release-date"></td>
+        </tr>
+        <tr>
+          <th>Vote / Votes:</th>
+          <td id="upcoming-vote">
+            <span class="vote-average-container">
+              <span class="vote-average"></span>
+            </span>
+            <span> / </span>
+            <span class="vote-count-container">
+              <span class="vote-count"></span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Popularity:</th>
+          <td id="upcoming-popularity"></td>
+        </tr>
+        <tr>
+          <th>Genre:</th>
+          <td id="upcoming-genre"></td>
+        </tr>
+      </table>
+      <h3 class="h3-home-about">About</h3>
+      <p id="upcoming-overview" class="p-home-about"></p>
       <button id="add-library-button">Add to my library</button>
     </div>
   </div>
