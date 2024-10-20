@@ -110,9 +110,10 @@ const renderUpcomingMovie = async () => {
     document.getElementById('upcoming-movie-title').textContent = movie.title;
     document.getElementById('upcoming-release-date').textContent =
       movie.release_date;
-    document.getElementById(
-      'upcoming-vote'
-    ).textContent = `${movie.vote_average} / ${movie.vote_count}`;
+
+    document.querySelector('.vote-average').textContent = movie.vote_average;
+    document.querySelector('.vote-count').textContent = movie.vote_count;
+
     document.getElementById('upcoming-popularity').textContent =
       movie.popularity;
     document.getElementById('upcoming-overview').textContent = movie.overview;

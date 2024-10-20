@@ -22,7 +22,6 @@
 
 header,
 footer,
-body,
 span,
 div,
 nav,
@@ -38,6 +37,18 @@ h5,
 h6,
 a,
 p {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  text-decoration: none;
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
   box-sizing: border-box;
   font-family: 'Roboto', sans-serif;
   font-style: normal;

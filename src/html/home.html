@@ -12,15 +12,34 @@
     <img id="upcoming-movie-poster" src="" alt="Movie Poster" />
     <div class="upcoming-movie-details">
       <h2 id="upcoming-movie-title">Movie Title</h2>
-      <p>
-        <strong>Release date:</strong>
-        <span id="upcoming-release-date"></span>
-      </p>
-      <p><strong>Vote / Votes:</strong> <span id="upcoming-vote"></span></p>
-      <p><strong>Popularity:</strong> <span id="upcoming-popularity"></span></p>
-      <p><strong>Genre:</strong> <span id="upcoming-genre"></span></p>
-      <h3>About</h3>
-      <p id="upcoming-overview"></p>
+      <table class="movie-info-table">
+        <tr>
+          <th>Release date:</th>
+          <td id="upcoming-release-date"></td>
+        </tr>
+        <tr>
+          <th>Vote / Votes:</th>
+          <td id="upcoming-vote">
+            <span class="vote-average-container">
+              <span class="vote-average"></span>
+            </span>
+            <span> / </span>
+            <span class="vote-count-container">
+              <span class="vote-count"></span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Popularity:</th>
+          <td id="upcoming-popularity"></td>
+        </tr>
+        <tr>
+          <th>Genre:</th>
+          <td id="upcoming-genre"></td>
+        </tr>
+      </table>
+      <h3 class="h3-home-about">About</h3>
+      <p id="upcoming-overview" class="p-home-about"></p>
       <button id="add-library-button">Add to my library</button>
     </div>
   </div>
