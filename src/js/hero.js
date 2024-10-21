@@ -25,7 +25,7 @@ const createStarElement = type => {
 };
 
 // Wyświetlanie gwiazdek jako rating
-const displayStarRating = rating => {
+export const displayStarRating = rating => {
   const starsContainer = document.createElement('div');
   starsContainer.classList.add('star-rating');
 

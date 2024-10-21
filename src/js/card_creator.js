@@ -1,4 +1,5 @@
 import { convertGenreIdsToNames } from './API.js';
+import { displayStarRating } from './hero.js';
 
 export const element = (tag, props) =>
   Object.assign(document.createElement(tag), props);
@@ -8,6 +9,7 @@ export const createElement = ({
   title,
   genre_ids,
   release_date,
+  vote_average,
 }) => {
   const card = element('li', { className: 'card' });
 
@@ -38,8 +40,12 @@ export const createElement = ({
     className: 'card-description-element',
     textContent: release_date.slice(0, 4),
   });
+  const stars = element('p', {
+    className: 'star-rating',
+    innerHTML: displayStarRating(vote_average),
+  });
 
-  description.append(genres, year);
+  description.append(genres, year, stars);
   card.append(poster, filmTitle, description);
   return card;
 };

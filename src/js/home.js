@@ -149,11 +149,12 @@ const renderUpcomingMovie = async () => {
     document.getElementById('upcoming-release-date').textContent =
       movie.release_date;
 
-    document.querySelector('.vote-average').textContent = movie.vote_average;
+    document.querySelector('.vote-average').textContent =
+      movie.vote_average.toFixed(1);
     document.querySelector('.vote-count').textContent = movie.vote_count;
 
     document.getElementById('upcoming-popularity').textContent =
-      movie.popularity;
+      movie.popularity.toFixed(1);
     document.getElementById('upcoming-overview').textContent = movie.overview;
     document.getElementById('upcoming-genre').textContent = genreText;
 
