@@ -142,3 +142,32 @@ document.addEventListener('DOMContentLoaded', () => {
   populateGenres(); // Dodaj gatunki do selecta
   loadMovies();
 });
+
+
+
+//Genre
+genreSelect.addEventListener('change', (e) => {
+  const selectedGenre = e.target.value;
+  
+ 
+  const options = document.querySelectorAll('#genre-select option');
+  options.forEach(option => option.style.color = '#fff'); 
+  
+ 
+  const selectedOption = options[genreSelect.selectedIndex];
+  selectedOption.style.color = 'orange';
+
+  let filteredMovies;
+
+  if (selectedGenre === 'all') {
+    filteredMovies = allMovies;
+  } else {
+    filteredMovies = allMovies.filter(movie =>
+      movie.genre_ids.includes(Number(selectedGenre))
+    );
+  }
+
+  catalog.innerHTML = ''; 
+  renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
+  displayedMovies = moviesPerPage;
+});
