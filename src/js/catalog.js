@@ -12,32 +12,34 @@ const input = document.querySelector('#searchForm-input');
 const inputClear = document.querySelector('#searchForm-input-clear');
 const pagination = document.querySelector('#pagination');
 
-pagination.style.display = 'flex';
 inputClear.style.display = 'none';
 
 let currentPage = 1;
-const API_KEY = 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2IxMWQ4ZGE0NTZlOGI5OTIxM2EyNDk4ODM4OGQyNSIsIm5iZiI6MTcyODcyMDEzMC44MDY0Niwic3ViIjoiNjcwYTJiNDEzYmI0NTU3YzY2OWFmYzM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Pgojbxf9JKo_J1qf6Qmglon5qZgkr9wpZ4I978dGQU8';
+const API_KEY =
+  'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2IxMWQ4ZGE0NTZlOGI5OTIxM2EyNDk4ODM4OGQyNSIsIm5iZiI6MTcyODcyMDEzMC44MDY0Niwic3ViIjoiNjcwYTJiNDEzYmI0NTU3YzY2OWFmYzM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Pgojbxf9JKo_J1qf6Qmglon5qZgkr9wpZ4I978dGQU8';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 axios.defaults.headers.common['Authorization'] = API_KEY;
 
 const renderElements = (films, rootList, callback) => {
   const fragment = document.createDocumentFragment();
-  fragment.append(...films.map(film => {
-    const filmElement = callback(film);
-    
-    filmElement.addEventListener('click', async (e) => {
-      if (e.target.classList.contains('card-poster')) {
-        try {
-          const details = await getDetails(film.id);
-          openDetailsModal(details);
-        } catch (error) {
-          console.log('Error fetching movie details:', error);
-        }
-      }
-    });
+  fragment.append(
+    ...films.map(film => {
+      const filmElement = callback(film);
 
-    return filmElement;
-  }));
+      filmElement.addEventListener('click', async e => {
+        if (e.target.classList.contains('card-poster')) {
+          try {
+            const details = await getDetails(film.id);
+            openDetailsModal(details);
+          } catch (error) {
+            console.log('Error fetching movie details:', error);
+          }
+        }
+      });
+
+      return filmElement;
+    })
+  );
 
   rootList.append(fragment);
 };
@@ -101,7 +103,6 @@ const createPagination = async () => {
     prevEl.append(prevButton);
     pagination.append(prevEl);
 
-
     const pageList = element('ul', { classList: 'page-list' });
     pagination.append(pageList);
     pageList.style.display = 'flex';
@@ -141,7 +142,6 @@ const createPagination = async () => {
     }
 
     for (let i = startPage; i <= endPage; i++) {
-
       const listEl = element('li', { classList: 'pagination-item' });
       const pageButton = element('button', {
         classList: 'pagination-btn',
@@ -209,7 +209,6 @@ const createPagination = async () => {
         button.style.backgroundColor = 'red';
       }
     });
-    console.log(buttons);
   } catch (error) {
     console.log(error);
   }

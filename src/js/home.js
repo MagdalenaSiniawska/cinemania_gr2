@@ -44,36 +44,35 @@ const renderTrendingMovies = async () => {
       movieElement.classList.add('trending-card');
       movieElement.setAttribute('data-movie-id', movie.id);
 
-      const posterUrl = movie.poster_path 
-        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+      const posterUrl = movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
         : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
-      
-      console.log('Poster URL:', posterUrl);
 
       movieElement.innerHTML = `
         <img src="${posterUrl}" alt="${movie.title}">
         <h3>${movie.title.toUpperCase()}</h3>
-        <p>${genreText} | ${new Date(movie.release_date).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
+        <p>${genreText} | ${new Date(
+        movie.release_date
+      ).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
       `;
 
-//       movieElement.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
+      movieElement.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
 
-//       movieElement.innerHTML = `
-//   <div class="card-info">
-//     <h3>${movie.title.toUpperCase()}</h3>
-//     <div class="card-info-inner">
-//       <div class="card-info-left">
-//         <p class="card-info-p">${genreText} | ${new Date(
-//         movie.release_date
-//       ).getFullYear()}</p>
-//       </div>
-//       <div class="card-info-right">
-//         ${renderStars(movie.vote_average / 2)}
-//       </div>
-//     </div>
-//   </div>
-// `;
-
+      movieElement.innerHTML = `
+  <div class="card-info">
+    <h3>${movie.title.toUpperCase()}</h3>
+    <div class="card-info-inner">
+      <div class="card-info-left">
+        <p class="card-info-p">${genreText} | ${new Date(
+        movie.release_date
+      ).getFullYear()}</p>
+      </div>
+      <div class="card-info-right">
+        ${renderStars(movie.vote_average / 2)}
+      </div>
+    </div>
+  </div>
+`;
 
       movieElement.addEventListener('click', async () => {
         const movieDetails = {
@@ -107,7 +106,7 @@ const addMovieToLibrary = movie => {
     vote_count: movie.vote_count,
     popularity: movie.popularity,
     overview: movie.overview,
-    genre_ids: movie.genre_ids
+    genre_ids: movie.genre_ids,
   };
   library.push(movieToAdd);
   localStorage.setItem('myLibrary', JSON.stringify(library));
@@ -122,7 +121,7 @@ const removeMovieFromLibrary = movieId => {
 const handleLibraryToggle = (movie, button) => {
   const movieWithFullPoster = {
     ...movie,
-    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}` 
+    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
   };
 
   if (isMovieInLibrary(movieWithFullPoster.id)) {
