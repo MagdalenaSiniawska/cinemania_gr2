@@ -5,7 +5,7 @@ const heroElement = document.querySelector('.hero');
 const defaultHeroContent = `
   <div class="hero-content">
     <h1 class="hero-header">Let’s Make Your Own Cinema</h1>
-    <p class="hero-description">Is a guide to creating a personalized movie theater experience. You'll need a projector, screen, and speakers. Decorate your space, choose your films, and stock up on snacks for the full experience.</p>
+    <p class="hero-description get_started_message">Is a guide to creating a personalized movie theater experience. You'll need a projector, screen, and speakers. Decorate your space, choose your films, and stock up on snacks for the full experience.</p>
     <button id="get-started">Get Started</button>
   </div>
 `;
