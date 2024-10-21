@@ -23,6 +23,7 @@ const renderStars = rating => {
 
   return starHTML;
 };
+
 const renderTrendingMovies = async () => {
   try {
     const trendingData = await getTrending('week');
@@ -30,9 +31,12 @@ const renderTrendingMovies = async () => {
 
     const trendingContainer = document.querySelector('#trending-container');
 
-    for (const movie of trendingMovies.slice(0, 3)) {
-      const genreNames = await convertGenreIdsToNames(movie.genre_ids);
+    const numberOfCards = window.innerWidth < 768 ? 1 : 3;
 
+    trendingContainer.innerHTML = '';
+
+    for (const movie of trendingMovies.slice(0, numberOfCards)) {
+      const genreNames = await convertGenreIdsToNames(movie.genre_ids);
       const limitedGenreNames = genreNames.slice(0, 2);
       const genreText = limitedGenreNames.join(', ');
 
@@ -52,6 +56,25 @@ const renderTrendingMovies = async () => {
         <p>${genreText} | ${new Date(movie.release_date).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
       `;
 
+//       movieElement.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
+
+//       movieElement.innerHTML = `
+//   <div class="card-info">
+//     <h3>${movie.title.toUpperCase()}</h3>
+//     <div class="card-info-inner">
+//       <div class="card-info-left">
+//         <p class="card-info-p">${genreText} | ${new Date(
+//         movie.release_date
+//       ).getFullYear()}</p>
+//       </div>
+//       <div class="card-info-right">
+//         ${renderStars(movie.vote_average / 2)}
+//       </div>
+//     </div>
+//   </div>
+// `;
+
+
       movieElement.addEventListener('click', async () => {
         const movieDetails = {
           ...movie,
@@ -67,13 +90,11 @@ const renderTrendingMovies = async () => {
   }
 };
 
-// Sprawdza, czy film jest w bibliotece
 const isMovieInLibrary = movieId => {
   const library = JSON.parse(localStorage.getItem('myLibrary')) || [];
   return library.some(movie => movie.id === movieId);
 };
 
-// Dodaje film do biblioteki
 const addMovieToLibrary = movie => {
   const library = JSON.parse(localStorage.getItem('myLibrary')) || [];
   const movieToAdd = {
@@ -92,7 +113,6 @@ const addMovieToLibrary = movie => {
   localStorage.setItem('myLibrary', JSON.stringify(library));
 };
 
-// Usuwa film z biblioteki
 const removeMovieFromLibrary = movieId => {
   let library = JSON.parse(localStorage.getItem('myLibrary')) || [];
   library = library.filter(movie => movie.id !== movieId);
@@ -129,15 +149,15 @@ const renderUpcomingMovie = async () => {
     document.getElementById('upcoming-movie-title').textContent = movie.title;
     document.getElementById('upcoming-release-date').textContent =
       movie.release_date;
-    document.getElementById(
-      'upcoming-vote'
-    ).textContent = `${movie.vote_average} / ${movie.vote_count}`;
+
+    document.querySelector('.vote-average').textContent = movie.vote_average;
+    document.querySelector('.vote-count').textContent = movie.vote_count;
+
     document.getElementById('upcoming-popularity').textContent =
       movie.popularity;
     document.getElementById('upcoming-overview').textContent = movie.overview;
     document.getElementById('upcoming-genre').textContent = genreText;
 
-    // Przycisk "Add/Remove from library"
     const addLibraryButton = document.getElementById('add-library-button');
     addLibraryButton.textContent = isMovieInLibrary(movie.id)
       ? 'Remove from my library'
@@ -156,4 +176,5 @@ const renderUpcomingMovie = async () => {
 document.addEventListener('DOMContentLoaded', () => {
   renderTrendingMovies();
   renderUpcomingMovie();
+  window.addEventListener('resize', renderTrendingMovies);
 });

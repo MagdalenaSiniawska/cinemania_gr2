@@ -70,7 +70,7 @@ const searchMovies = async () => {
 const search = async () => {
   try {
     const response = await searchMovies();
-    console.log('Search response:', response); // Logowanie odpowiedzi
+    filmList.innerHTML = '';
     renderElements(response.results, filmList, createElement);
   } catch (error) {
     console.log('Error in search:', error);
@@ -81,28 +81,102 @@ const search = async () => {
 const createPagination = async () => {
   try {
     const response = await searchMovies();
+    const totalPages = response.total_pages;
+    const visibleButtons = 5;
+    pagination.innerHTML = '';
+    pagination.style.display = 'flex';
     const prevEl = element('li', { classList: 'pagination-item' });
     const prevButton = element('button', {
       classList: 'pagination-btn prev-page',
       id: 'previous-page',
       textContent: '<',
     });
+    prevButton.addEventListener('click', () => {
+      if (currentPage > 1) {
+        currentPage--;
+        search();
+        createPagination();
+      }
+    });
     prevEl.append(prevButton);
-    pagination.prepend(prevEl);
+    pagination.append(prevEl);
 
-    const listEl = element('li', { classList: 'pagination-item' });
+
     const pageList = element('ul', { classList: 'page-list' });
-    listEl.append(pageList);
-    pagination.append(listEl);
+    pagination.append(pageList);
+    pageList.style.display = 'flex';
 
-    for (let i = 1; i <= response.total_pages; i++) {
+    let startPage = Math.max(1, currentPage - Math.floor(visibleButtons / 2));
+    let endPage = Math.min(totalPages, startPage + visibleButtons - 1);
+
+    if (endPage - startPage < visibleButtons - 1) {
+      if (startPage === 1) {
+        endPage = Math.min(totalPages, startPage + visibleButtons - 1);
+      } else {
+        startPage = Math.max(1, endPage - visibleButtons + 1);
+      }
+    }
+
+    if (startPage > 1) {
+      const firstPageButton = element('li', { classList: 'pagination-item' });
+      const firstButton = element('button', {
+        classList: 'pagination-btn',
+        textContent: '1',
+      });
+      firstButton.addEventListener('click', () => {
+        currentPage = 1;
+        search();
+        createPagination();
+      });
+      firstPageButton.append(firstButton);
+      pageList.append(firstPageButton);
+
+      if (startPage > 2) {
+        const ellipsis = element('li', {
+          classList: 'pagination-item',
+          textContent: '...',
+        });
+        pageList.append(ellipsis);
+      }
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+
       const listEl = element('li', { classList: 'pagination-item' });
       const pageButton = element('button', {
         classList: 'pagination-btn',
         textContent: i,
       });
+      pageButton.addEventListener('click', () => {
+        currentPage = i;
+        search();
+        createPagination();
+      });
       listEl.append(pageButton);
       pageList.append(listEl);
+    }
+
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) {
+        const ellipsis = element('li', {
+          classList: 'pagination-item',
+          textContent: '...',
+        });
+        pageList.append(ellipsis);
+      }
+
+      const lastPageButton = element('li', { classList: 'pagination-item' });
+      const lastButton = element('button', {
+        classList: 'pagination-btn',
+        textContent: totalPages,
+      });
+      lastButton.addEventListener('click', () => {
+        currentPage = totalPages;
+        search();
+        createPagination();
+      });
+      lastPageButton.append(lastButton);
+      pageList.append(lastPageButton);
     }
 
     const nextEl = element('li', { classList: 'pagination-item' });
@@ -111,8 +185,31 @@ const createPagination = async () => {
       id: 'next-page',
       textContent: '>',
     });
+    nextButton.addEventListener('click', () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        search();
+        createPagination();
+      }
+    });
     nextEl.append(nextButton);
     pagination.append(nextEl);
+
+    if (currentPage === 1) {
+      prevButton.disabled = true;
+    }
+    if (currentPage === totalPages) {
+      nextButton.disabled = true;
+    }
+    const buttons = Array.from(
+      document.querySelectorAll('.pagination-btn')
+    ).slice(1, -1);
+    buttons.forEach(button => {
+      if (button.textContent == currentPage) {
+        button.style.backgroundColor = 'red';
+      }
+    });
+    console.log(buttons);
   } catch (error) {
     console.log(error);
   }
@@ -125,7 +222,7 @@ form.addEventListener('submit', e => {
   if (input.value !== '') {
     filmList.innerHTML = '';
     pagination.innerHTML = '';
-    pagination.style.display = 'flex';
+
     (async () => {
       currentPage = 1;
       await search();
@@ -135,45 +232,6 @@ form.addEventListener('submit', e => {
           '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
       }
       await createPagination();
-      const pageList = document.querySelector('.page-list');
-      pageList.style.display = 'flex';
-      const prevButton = document.querySelector('#previous-page');
-      const nextButton = document.querySelector('#next-page');
-      const totalPages = pageList.childElementCount;
-      const pageBtns = Array.from(
-        document.querySelectorAll('.pagination-btn')
-      ).slice(1, -1);
-
-      pageBtns.forEach(button => {
-        button.addEventListener('click', () => {
-          currentPage = button.textContent;
-          filmList.innerHTML = '';
-          search();
-          prevButton.disabled = currentPage == 1;
-          nextButton.disabled = currentPage == totalPages;
-        });
-      });
-
-      prevButton.disabled = true;
-      if (totalPages === 1) {
-        nextButton.disabled = true;
-      }
-
-      prevButton.addEventListener('click', () => {
-        currentPage--;
-        filmList.innerHTML = '';
-        search();
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage === totalPages;
-      });
-
-      nextButton.addEventListener('click', () => {
-        currentPage++;
-        filmList.innerHTML = '';
-        search();
-        prevButton.disabled = currentPage === 1;
-        nextButton.disabled = currentPage === totalPages;
-      });
     })();
     inputClear.style.display = 'inline';
   } else {
