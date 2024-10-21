@@ -171,3 +171,7 @@ genreSelect.addEventListener('change', (e) => {
   renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
   displayedMovies = moviesPerPage;
 });
+
+
+
+
