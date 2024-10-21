@@ -37,7 +37,7 @@
     font-family: 'Roboto';
 
   }
-  
+
 
   #genre-select {
     padding: 10px 20px;
@@ -74,60 +74,38 @@
     border-color: var(--orange);
   }
   
-  .custom-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 200px;
+  /* Movies Grid */
+  
+  #catalog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
   }
   
-  .dropdown-btn {
-    width: 100%;
+  .movies-list .movie-card {
+    background-color: var(--secondary-black);
+    border-radius: 10px;
     padding: 10px;
-    background-color: #333; /* Dark gray */
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    text-align: left;
+    text-align: center;
   }
   
-  .dropdown-menu {
-    display: none; /* Hidden by default */
-    position: absolute;
-    top: 100%;
-    left: 0;
+  .movies-list .movie-card img {
     width: 100%;
-    background-color: #333;
-    border: 1px solid #555;
-    border-radius: 5px;
-    z-index: 1000;
+    border-radius: 8px;
   }
   
-  .dropdown-menu li {
-    padding: 10px;
-    color: #fff;
-    cursor: pointer;
-    list-style: none;
-    border-bottom: 1px solid #444;
-  }
-  
-  .dropdown-menu li:hover {
-    background-color: #444; /* Highlight on hover */
-  }
-  
-  .dropdown-menu li.selected {
-    color: orange; /* Selected item text color */
-  }
-  
-  .dropdown-btn:after {
-    content: '▼';
-    float: right;
-    margin-right: 10px;
+  .movies-list .movie-card h3 {
+    font-size: 20px;
+    margin-top: 10px;
     color: #fff;
   }
   
-  
+  .movies-list .movie-card p {
+    color: #999;
+    font-size: 14px;
+  }
+
   /* Load More Button */
 
 
@@ -184,7 +162,7 @@
  
   
   /* Tablet view */
-  @media (max-width: 1024px) {
+  @media (min-width: 768px) and (max-width: 1157px){
     .library-title {
       font-size: 40px;
     }
