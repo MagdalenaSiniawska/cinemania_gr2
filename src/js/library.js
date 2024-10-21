@@ -21,8 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const option = document.createElement('option');
       option.value = genre;
       option.textContent = genre.charAt(0).toUpperCase() + genre.slice(1);
+    
       genreSelect.appendChild(option);
     });
+   
   };
 
   const createStarElement = type => {

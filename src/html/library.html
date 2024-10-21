@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
     <title>My-library</title>
   </head>
-
   <body>
     <header>
-      <load src="./html/header.html" />
+      <a href="../home.html">index</a>
+      <a href="../catalog.html">catalog</a>
     </header>
     <main>
       <section class="lib-hero">
@@ -18,8 +18,8 @@
             <h1 class="library-title">Create Your<br>Dream Cinema</h1>
             <p class="library-text">
               Is a guide to designing a personalized movie theater experience
-              with the right equipment, customized decor, and favorite films.
-              This guide helps you bring the cinema experience into your own
+              with the right equipment, customized decor,and favorite films.
+              This guide helps you bring the cinemaexperience into your own
               home with cozy seating, dim lighting, and movie theater snacks.
             </p>
           </div>
@@ -27,31 +27,23 @@
       </section>
 
       <div id="filters">
-        <select id="genre-select">
-          <!-- Opcje gatunków zostaną dodane w JavaScript -->
-        </select>
+        <select id="genre-select"></select>
       </div>
 
-      <section
-        id="catalog"
-        class="movies-list"
-        aria-labelledby="catalog-header"
-      >
-        <h2 id="catalog-header">Movie Catalog</h2>
+      <section id="catalog" class="movies-list">
         <button id="load-more">Load More</button>
       </section>
 
       <section class="empty-library" id="empty-library" style="display: none">
         <h2>OOPS...</h2>
-        <p>You don't have any movies in your library.</p>
-        <a href="./catalog.html"
-          ><button id="searchMovieBtn">Search Movie</button></a
-        >
+        <p>You dont have any movies at your library.</p>
+        <button onclick="searchMovie()">Search Movie</button>
       </section>
     </main>
-    <footer><load src="./html/footer.html" /></footer>
-    <script type="module" src="./js/header.js"></script>
-    <script type="module" src="./js/library.js"></script>
-    <script type="module" src="./js/footer.js"></script>
+    <footer><load src="./footer.html" /></footer>
+    <script type="module" src="../main.js"></script>
   </body>
 </html>
+
+
+
