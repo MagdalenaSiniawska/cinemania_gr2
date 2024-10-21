@@ -77,7 +77,49 @@ genreSelect.addEventListener('change', e => {
     );
   }
 
-  catalog.innerHTML = ''; // Clear current movies
+  catalog.innerHTML = ''; 
+  renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
+  displayedMovies = moviesPerPage;
+});
+
+
+
+
+// Display empty state if no movies are in the library
+const emptyLibrarySection = document.getElementById('empty-library');
+
+if (allMovies.length === 0) {
+  catalog.style.display = 'none';
+  emptyLibrarySection.style.display = 'block';
+} else {
+  catalog.style.display = 'grid'; 
+  emptyLibrarySection.style.display = 'none';
+}
+
+
+// Listen for genre selection change
+genreSelect.addEventListener('change', (e) => {
+  const selectedGenre = e.target.value;
+  
+ 
+  const options = document.querySelectorAll('#genre-select option');
+  options.forEach(option => option.style.color = '#fff'); 
+  
+ 
+  const selectedOption = options[genreSelect.selectedIndex];
+  selectedOption.style.color = 'orange';
+
+  let filteredMovies;
+
+  if (selectedGenre === 'all') {
+    filteredMovies = allMovies;
+  } else {
+    filteredMovies = allMovies.filter(movie =>
+      movie.genre_ids.includes(Number(selectedGenre))
+    );
+  }
+
+  catalog.innerHTML = ''; 
   renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
   displayedMovies = moviesPerPage;
 });
