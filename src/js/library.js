@@ -8,8 +8,15 @@ document.addEventListener('DOMContentLoaded', () => {
   let allMovies = [];
   let filteredMovies = []; // Zmienna do przechowywania przefiltrowanych filmów
 
+<<<<<<< Updated upstream
   // Lista gatunków (w małych literach)
   const genres = ['action', 'drama', 'comedy', 'horror', 'thriller'];
+=======
+    let displayedMovies = 0;
+    const moviesPerPage = 3;
+    let allMovies = [];
+    let filteredMovies = [];
+>>>>>>> Stashed changes
 
   const populateGenres = () => {
     const defaultOption = document.createElement('option');
@@ -58,8 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     return starsContainer.outerHTML;
   };
 
+<<<<<<< Updated upstream
   const renderMovies = (movies, container) => {
     const fragment = document.createDocumentFragment();
+=======
+    const removeMovieFromLibrary = (movieId) => {
+        allMovies = allMovies.filter(movie => movie.id !== movieId);
+        localStorage.setItem('myLibrary', JSON.stringify(allMovies));
+        loadMovies();
+    };
+>>>>>>> Stashed changes
 
     movies.forEach(movie => {
       const movieElement = document.createElement('div');
@@ -67,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const rating = movie.vote_average;
 
+<<<<<<< Updated upstream
       movieElement.innerHTML = `
                 <img src="${movie.poster || ''}" alt="${
         movie.title || ''
@@ -81,6 +97,78 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>${displayStarRating(rating) || ''}</p>
             `;
       fragment.appendChild(movieElement);
+=======
+            const rating = movie.vote_average;
+
+            movieElement.innerHTML = `
+                <button class="remove-movie" data-id="${movie.id}">X</button>
+                <img src="https://image.tmdb.org/t/p/w500${movie.poster_path || ''}" alt="${movie.title || ''} poster" class="film-poster"/>
+                <div class="info">
+                    <h3>${movie.title || ''}</h3>
+                    <p>${movie.genres.join(', ') || 'N/A'} | ${new Date(movie.release_date).getFullYear() || ''}</p>
+                    <p>${displayStarRating(rating) || ''}</p>
+                </div>
+            `;
+
+            const removeButton = movieElement.querySelector('.remove-movie');
+            removeButton.addEventListener('click', () => removeMovieFromLibrary(movie.id));
+
+            fragment.appendChild(movieElement);
+        });
+
+        container.append(fragment);
+    };
+
+    const fetchMoviesFromAPI = async () => {
+        try {
+            const response = await getTrending('day'); 
+            allMovies = await Promise.all(response.results.map(async movie => {
+                const details = await getDetails(movie.id);
+                return {
+                    ...movie,
+                    genres: await convertGenreIdsToNames(details.genres.map(g => g.id)),
+                    poster_path: details.poster_path,
+                    release_date: details.release_date,
+                };
+            }));
+        } catch (error) {
+            console.error('Error fetching movies:', error);
+        }
+    };
+
+    const loadMovies = () => {
+        catalog.innerHTML = '';
+        filteredMovies = allMovies; 
+
+        if (!Array.isArray(allMovies) || allMovies.length === 0) {
+            emptyLibrarySection.style.display = 'block';
+            loadMoreBtn.style.display = 'none';
+            return;
+        } else {
+            emptyLibrarySection.style.display = 'none';
+        }
+
+        renderMovies(filteredMovies.slice(0, moviesPerPage), catalog);
+        displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
+
+        updateLoadMoreButton();
+    };
+
+    const updateLoadMoreButton = () => {
+        loadMoreBtn.style.display = displayedMovies < filteredMovies.length ? 'block' : 'none';
+    };
+
+    loadMoreBtn.addEventListener('click', () => {
+        const moreMovies = filteredMovies.slice(
+            displayedMovies,
+            displayedMovies + moviesPerPage
+        );
+        
+        renderMovies(moreMovies, catalog);
+        displayedMovies += moreMovies.length;
+
+        updateLoadMoreButton();
+>>>>>>> Stashed changes
     });
 
     container.append(fragment);
@@ -96,6 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // catalog.innerHTML = '';
     filteredMovies = allMovies; // Na początku wyświetlamy wszystkie filmy
 
+<<<<<<< Updated upstream
     if (!Array.isArray(allMovies) || allMovies.length === 0) {
       console.warn('No movies found in library or library is not an array.');
       return;
@@ -143,4 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ładowanie zapisanych filmów po załadowaniu strony
   populateGenres(); // Dodaj gatunki do selecta
   loadMovies();
+=======
+        updateLoadMoreButton();
+    });
+
+    populateGenres();
+    await fetchMoviesFromAPI();
+    loadMovies();
+>>>>>>> Stashed changes
 });
