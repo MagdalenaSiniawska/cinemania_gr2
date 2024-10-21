@@ -1,11 +1,11 @@
 // Modal dla zwiastuna filmu
-export const openTrailerModal = (trailerData) => {
+export const openTrailerModal = trailerData => {
   console.log('Trying to open trailer modal with data:', trailerData);
   const modalTrailer = document.getElementById('modal-trailer');
 
   // Sprawdzamy, czy istnieje modal
   if (!modalTrailer) {
-    console.error("Modal element not found!");
+    console.error('Modal element not found!');
     return;
   }
 
@@ -23,7 +23,10 @@ export const openTrailerModal = (trailerData) => {
           frameborder="0" allowfullscreen></iframe>
       </div>
     `;
-    console.log('Trailer found, iframe set:', `https://www.youtube.com/embed/${trailer.key}`);
+    console.log(
+      'Trailer found, iframe set:',
+      `https://www.youtube.com/embed/${trailer.key}`
+    );
   } else {
     // Jeśli brak zwiastuna, pokazujemy komunikat o błędzie
     modalTrailer.innerHTML = `
@@ -37,22 +40,29 @@ export const openTrailerModal = (trailerData) => {
   }
 
   modalTrailer.style.display = 'block';
-  console.log('Modal style after setting to block:', window.getComputedStyle(modalTrailer).display);
+  console.log(
+    'Modal style after setting to block:',
+    window.getComputedStyle(modalTrailer).display
+  );
 
   // Zamknięcie modala przez kliknięcie w ikonę zamknięcia
-  modalTrailer.querySelector('.close-modal').addEventListener('click', (event) => {
-    event.stopPropagation();
-    modalTrailer.style.display = 'none';
-    console.log('Modal closed via close button.');
-  });
+  modalTrailer
+    .querySelector('.close-modal')
+    .addEventListener('click', event => {
+      event.stopPropagation();
+      modalTrailer.style.display = 'none';
+      console.log('Modal closed via close button.');
+    });
 
   // Zabezpieczenie przed przypadkowym zamknięciem przez kliknięcie w zawartość modala
-  modalTrailer.querySelector('.modal-content').addEventListener('click', (event) => {
-    event.stopPropagation(); 
-  });
+  modalTrailer
+    .querySelector('.modal-content')
+    .addEventListener('click', event => {
+      event.stopPropagation();
+    });
 
   // Zamknięcie modala przez kliknięcie w tło (ale nie w modal-content)
-  modalTrailer.addEventListener('click', (event) => {
+  modalTrailer.addEventListener('click', event => {
     if (event.target === modalTrailer) {
       modalTrailer.style.display = 'none';
       console.log('Modal closed by clicking outside modal-content.');
@@ -61,7 +71,7 @@ export const openTrailerModal = (trailerData) => {
 };
 
 // Modal dla szczegółów filmu
-export const openDetailsModal = (details) => {
+export const openDetailsModal = details => {
   const modalDetails = document.getElementById('modal-details');
 
   console.log('Modal element:', modalDetails); // Dodaj ten log
@@ -72,9 +82,9 @@ export const openDetailsModal = (details) => {
     return;
   }
 
-  const voteAverage = details.vote_average.toFixed(2);
-  const voteCount = details.vote_count.toFixed(2);
-  const popularity = details.popularity.toFixed(2);
+  const voteAverage = details.vote_average.toFixed(1);
+  const voteCount = details.vote_count;
+  const popularity = details.popularity.toFixed(1);
 
   const backgroundImage = details.backdrop_path
     ? `https://image.tmdb.org/t/p/original/${details.backdrop_path}`
@@ -86,7 +96,9 @@ export const openDetailsModal = (details) => {
       <h2>${details.title}</h2>
       <p><strong>Vote / Votes:</strong> ${voteAverage} / ${voteCount}</p>
       <p><strong>Popularity:</strong> ${popularity}</p>
-      <p><strong>Genres:</strong> ${details.genres.map(genre => genre.name).join(', ')}</p>
+      <p><strong>Genres:</strong> ${details.genres
+        .map(genre => genre.name)
+        .join(', ')}</p>
       <p><strong>Overview:</strong> ${details.overview}</p>
       <button id="add-to-library" class="add-to-library-btn">Add to my library</button>
     </div>
@@ -95,9 +107,9 @@ export const openDetailsModal = (details) => {
   console.log('Modal should now be displayed:', modalDetails.style.display);
 
   // Ustaw modal na widoczny
-  modalDetails.classList.add('show'); 
+  modalDetails.classList.add('show');
   console.log('Modal should be shown');
-  
+
   // Zamknięcie modala dla szczegółów filmu przez ikonę zamknięcia
   modalDetails.querySelector('.close-modal').addEventListener('click', () => {
     console.log('Close modal clicked'); // Dodaj ten log
@@ -105,7 +117,7 @@ export const openDetailsModal = (details) => {
   });
 
   // Zamknięcie modala przez kliknięcie w tło modala
-  modalDetails.addEventListener('click', (event) => {
+  modalDetails.addEventListener('click', event => {
     if (event.target === modalDetails) {
       modalDetails.style.display = 'none';
     }
@@ -113,7 +125,7 @@ export const openDetailsModal = (details) => {
 
   // Dodanie filmu do biblioteki po kliknięciu w przycisk "Add to my library"
   const addToLibraryButton = document.getElementById('add-to-library');
-  addToLibraryButton.addEventListener('click', (event) => {
+  addToLibraryButton.addEventListener('click', event => {
     const movieToAdd = {
       title: details.title,
       vote_average: details.vote_average,
@@ -122,7 +134,7 @@ export const openDetailsModal = (details) => {
       genres: details.genres.map(genre => genre.name),
       overview: details.overview,
       year: new Date(details.release_date).getFullYear(),
-      poster: `https://image.tmdb.org/t/p/w500${details.poster_path}`
+      poster: `https://image.tmdb.org/t/p/w500${details.poster_path}`,
     };
 
     // Sprawdź, czy film jest już w bibliotece
