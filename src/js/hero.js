@@ -5,7 +5,7 @@ const heroElement = document.querySelector('.hero');
 const defaultHeroContent = `
   <div class="hero-content">
     <h1>Let’s Make Your Own Cinema</h1>
-    <p>Is a guide to creating a personalized movie theater experience. You'll need a projector, screen, and speakers. Decorate your space, choose your films, and stock up on snacks for the full experience.</p>
+    <p class="get_started_message">Is a guide to creating a personalized movie theater experience. You'll need a projector, screen, and speakers. Decorate your space, choose your films, and stock up on snacks for the full experience.</p>
     <button id="get-started">Get Started</button>
   </div>
 `;
@@ -66,14 +66,14 @@ const renderMovieHero = async () => {
     }
 
     const movie = movies[Math.floor(Math.random() * movies.length)];
-    heroElement.style.backgroundImage = `url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`;
+    heroElement.style.backgroundImage = `linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1)), url(https://image.tmdb.org/t/p/original/${movie.backdrop_path})`;
 
     // Zamiana numerycznego ratingu na gwiazdki
     heroElement.innerHTML = `
       <div class="movie-info">
         <h2>${movie.title}</h2>
-        <p>Rating: ${displayStarRating(movie.vote_average)}</p>
-        <p>${movie.overview}</p>
+        <p>${displayStarRating(movie.vote_average)}</p>
+        <p class="hero-description">${movie.overview}</p>
         <button id="watch-trailer">Watch Trailer</button>
         <button id="more-details">More Details</button>
       </div>
