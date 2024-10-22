@@ -137,7 +137,8 @@ const renderUpcomingMovie = async () => {
   try {
     const upcomingData = await getUpcoming();
     const upcomingMovies = upcomingData.results;
-    const movie = upcomingMovies[0];
+    const movie = upcomingMovies[Math.floor(Math.random() * 10)];
+    console.log(movie);
 
     const genreNames = await convertGenreIdsToNames(movie.genre_ids);
     const genreText = genreNames.join(', ');
@@ -163,9 +164,62 @@ const renderUpcomingMovie = async () => {
       ? 'Remove from my library'
       : 'Add to my library';
 
-    addLibraryButton.addEventListener('click', () =>
-      handleLibraryToggle(movie, addLibraryButton)
-    );
+    addLibraryButton.addEventListener('click', event => {
+      const movieToAdd = {
+        title: movie.title,
+        vote_average: movie.vote_average,
+        vote_count: movie.vote_count,
+        popularity: movie.popularity,
+        genres: movie.genre_ids.map(genre => genre.name),
+        overview: movie.overview,
+        year: new Date(movie.release_date).getFullYear(),
+        poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+      };
+
+      // Sprawdź, czy film jest już w bibliotece
+      const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+      const movieExists = myLibrary.some(
+        item => item.title === movieToAdd.title
+      );
+
+      if (!movieExists) {
+        addMovieToLibrary(movieToAdd);
+        addLibraryButton.textContent = 'Remove from my library'; // Zmień tekst przycisku
+      } else {
+        removeMovieFromLibrary(movieToAdd.title);
+        addLibraryButton.textContent = 'Add to my library'; // Zmień tekst przycisku
+      }
+    });
+
+    // Funkcja dodawania filmu do localStorage
+    function addMovieToLibrary(movie) {
+      const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+      myLibrary.push(movie);
+      localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+      alert(`${movie.title} has been added to your library!`); // Użycie alertu
+    }
+
+    // Funkcja usuwania filmu z localStorage
+    function removeMovieFromLibrary(movieTitle) {
+      let myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+      myLibrary = myLibrary.filter(movie => movie.title !== movieTitle);
+      localStorage.setItem('myLibrary', JSON.stringify(myLibrary));
+      alert(`${movieTitle} has been removed from your library!`); // Użycie alertu
+    }
+
+    // Inicjalizacja przycisku na podstawie obecności filmu w localStorage
+    function initializeLibraryButton(film) {
+      const myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+      const movieExists = myLibrary.some(mov => mov.title === movie.title);
+
+      if (movieExists) {
+        addLibraryButton.textContent = 'Remove from My Library';
+      } else {
+        addLibraryButton.textContent = 'Add to my Library';
+      }
+    }
+
+    initializeLibraryButton(movie);
   } catch (error) {
     console.error('Error fetching upcoming movies:', error);
     document.getElementById('upcoming-no-movies-message').style.display =

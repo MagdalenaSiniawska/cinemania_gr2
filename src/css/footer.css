@@ -147,3 +147,7 @@
     height: 77px;
   }
 }
+
+.name-inactive {
+  color: red;
+}

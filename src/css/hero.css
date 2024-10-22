@@ -16,8 +16,8 @@ h2 {
   line-height: 37.5px;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 40px;
-  margin-left: 20px;
+  /* margin-top: 40px;
+  margin-left: 20px; */
   margin-bottom: 0;
 }
 
@@ -143,8 +143,8 @@ h2 {
     font-size: 44px;
     font-weight: 700;
     line-height: 51.56px;
-    margin-top: 36px;
-    margin-left: 32px;
+    /* margin-top: 36px;
+    margin-left: 32px; */
     margin-bottom: 0;
   }
   .star-rating {
@@ -191,8 +191,8 @@ h2 {
     font-size: 64px;
     font-weight: 700;
     line-height: 75px;
-    margin-top: 118px;
-    margin-left: 135px;
+    /* margin-top: 118px;
+    margin-left: 135px; */
     margin-bottom: 0;
   }
 
@@ -235,4 +235,8 @@ h2 {
     margin-left: 135px;
     margin-bottom: 181px;
   }
+}
+.hero-header {
+  margin-top: 10px;
+  margin-left: 10px;
 }

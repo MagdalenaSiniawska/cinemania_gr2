@@ -62,12 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
     movies.forEach(movie => {
       const movieElement = document.createElement('div');
       movieElement.classList.add('film-card');
-      console.log(movie);
+
       const rating = movie.vote_average;
 
       movieElement.innerHTML = `
+                <button class="remove-movie" data-id="${movie.id}">x</button>
                 <img src="https://image.tmdb.org/t/p/w500${
-                  movie.poster || ''
+                  movie.poster_path || ''
                 }" alt="${movie.title || ''} poster" class="film-poster"/>
                 <div class ="film-card-descr">
                 <h3 class ="film-card-title">${movie.title || ''}</h3>
@@ -80,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }</p>
                 </div>
             `;
-      fragment.appendChild(movieElement);
     });
 
     container.append(fragment);
@@ -91,21 +91,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return Array.isArray(myLibrary) ? myLibrary : [];
   };
 
-  const catFilms = document.querySelector('.catalog-films');
   const loadMovies = () => {
     allMovies = fetchMoviesFromLibrary();
-    catFilms.innerHTML = '';
+    // catalog.innerHTML = '';
     filteredMovies = allMovies; // Na początku wyświetlamy wszystkie filmy
 
     if (!Array.isArray(allMovies) || allMovies.length === 0) {
       console.warn('No movies found in library or library is not an array.');
-      document.querySelector('#empty-library').style.display = 'block';
-      loadMoreBtn.style.display = 'none';
-
       return;
     }
 
-    renderMovies(filteredMovies.slice(0, moviesPerPage), catFilms);
+    renderMovies(filteredMovies.slice(0, moviesPerPage), catalog);
     displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
 
     loadMoreBtn.style.display =
@@ -117,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       displayedMovies,
       displayedMovies + moviesPerPage
     );
-    renderMovies(moreMovies, catFilms);
+    renderMovies(moreMovies, catalog);
     displayedMovies += moreMovies.length;
 
     loadMoreBtn.style.display =
@@ -136,8 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     });
 
-    catFilms.innerHTML = '';
-    renderMovies(filteredMovies.slice(0, moviesPerPage), catFilms);
+    // catalog.innerHTML = '';
+    renderMovies(filteredMovies.slice(0, moviesPerPage), catalog);
     displayedMovies = Math.min(moviesPerPage, filteredMovies.length);
 
     loadMoreBtn.style.display =
@@ -150,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 //Genre
-const genreSelect = document.querySelector('#genre-select');
 genreSelect.addEventListener('change', e => {
   const selectedGenre = e.target.value;
 
@@ -170,7 +165,7 @@ genreSelect.addEventListener('change', e => {
     );
   }
 
-  catFilms.innerHTML = '';
-  renderElements(filteredMovies.slice(0, moviesPerPage), catFilms);
+  catalog.innerHTML = '';
+  renderElements(filteredMovies.slice(0, moviesPerPage), catalog);
   displayedMovies = moviesPerPage;
 });
