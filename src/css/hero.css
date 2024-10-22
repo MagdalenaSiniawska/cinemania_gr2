@@ -1,36 +1,238 @@
+.hero {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: left;
+}
+
+.h1,
+h2 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 37.5px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  margin-left: 20px;
+  margin-bottom: 0;
+}
+
 .star-rating {
-    display: flex;
-    gap: 5px;
+  display: flex;
+  gap: 5px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .full-star,
 .empty-star,
 .half-star {
-    font-size: 24px;
-    color: gold;
-    position: relative;
+  font-size: 24px;
+  color: rgba(248, 119, 25, 1);
+  position: relative;
 }
 
 .empty-star {
-    color: lightgray;
-    /* Puste gwiazdki będą miały inny kolor */
+  color: rgba(248, 119, 25, 1);
+  /* Puste gwiazdki będą miały inny kolor */
 }
 
 .half-star {
-    color: lightgray;
-    /* Najpierw wyświetlamy pustą gwiazdkę */
+  /* Najpierw wyświetlamy pustą gwiazdkę */
 }
 
 .half-star::before {
-    content: '★';
-    /* Dodajemy pełną gwiazdkę */
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 50%;
-    /* Zabarwiamy tylko lewą połowę */
-    overflow: hidden;
-    color: gold;
-    /* Kolor dla zakolorowanej połowy */
+  content: '★';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  /* Zabarwiamy tylko lewą połowę */
+  overflow: hidden;
+  color: rgba(248, 119, 25, 1);
+  /* Kolor dla zakolorowanej połowy */
 }
 
+.hero-description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 49px;
+  width: 254px;
+  margin-left: 20px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.get_started_message {
+  height: 49px;
+  width: 254px;
+  margin-left: 20px;
+  margin-bottom: 28px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#watch-trailer {
+  background-color: rgba(248, 119, 25, 1);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-right: 10px;
+  margin-left: 20px;
+  margin-bottom: 54px;
+  transition: background-color 0.3s ease;
+}
+
+#watch-trailer:hover {
+  background-color: white;
+  color: rgba(248, 119, 25, 1);
+  border-color: 1px rgba(248, 119, 25, 1) solid;
+}
+
+#more-details {
+  background-color: transparent;
+  color: white;
+  border: 1px white solid;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: background-color 0.3s ease;
+}
+
+#more-details:hover {
+  background-color: transparent;
+  color: rgba(248, 119, 25, 1);
+  border-color: 1px rgba(248, 119, 25, 1) solid;
+}
+
+#get-started {
+  background-color: rgba(248, 119, 25, 1);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 30px;
+  margin-right: 10px;
+  margin-left: 20px;
+  margin-bottom: 54px;
+  transition: background-color 0.3s ease;
+}
+
+#get-started:hover {
+  background-color: white;
+  color: rgba(248, 119, 25, 1);
+  border-color: 1px rgba(248, 119, 25, 1) solid;
+}
+
+@media screen and (min-width: 768px) {
+  .h1,
+  h2 {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 51.56px;
+    margin-top: 36px;
+    margin-left: 32px;
+    margin-bottom: 0;
+  }
+  .star-rating {
+    margin-top: 36px;
+    margin-left: 32px;
+  }
+  .hero-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 49px;
+    width: 254px;
+    margin-left: 32px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 16.41px;
+    font-weight: 400;
+  }
+  .get_started_message {
+    height: 49px;
+    width: 254px;
+    margin-left: 32px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    line-height: 16.41px;
+    font-weight: 400;
+  }
+  #watch-trailer {
+    margin-left: 32px;
+    margin-bottom: 63px;
+  }
+
+  #get-started {
+    margin-left: 32px;
+    margin-bottom: 63px;
+  }
+}
+
+@media screen and (min-width: 1158px) {
+  .h1,
+  h2 {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 75px;
+    margin-top: 118px;
+    margin-left: 135px;
+    margin-bottom: 0;
+  }
+
+  .star-rating {
+    margin-left: 135px;
+    margin-bottom: 28px;
+  }
+
+  .hero-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 58px;
+    width: 367px;
+    margin-left: 135px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 18.75px;
+    font-weight: 400;
+  }
+
+  .get_started_message {
+    height: 58px;
+    width: 367px;
+    margin-left: 135px;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 18.75px;
+    font-weight: 400;
+  }
+
+  #watch-trailer {
+    margin-left: 135px;
+    margin-bottom: 181px;
+  }
+
+  #get-started {
+    margin-left: 135px;
+    margin-bottom: 181px;
+  }
+}

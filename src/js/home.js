@@ -44,6 +44,18 @@ const renderTrendingMovies = async () => {
       movieElement.classList.add('trending-card');
       movieElement.setAttribute('data-movie-id', movie.id);
 
+      const posterUrl = movie.poster_path
+        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+        : `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
+
+      movieElement.innerHTML = `
+        <img src="${posterUrl}" alt="${movie.title}">
+        <h3>${movie.title.toUpperCase()}</h3>
+        <p>${genreText} | ${new Date(
+        movie.release_date
+      ).getFullYear()} ${renderStars(movie.vote_average / 2)}</p>
+      `;
+
       movieElement.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.backdrop_path}')`;
 
       movieElement.innerHTML = `
@@ -84,7 +96,19 @@ const isMovieInLibrary = movieId => {
 
 const addMovieToLibrary = movie => {
   const library = JSON.parse(localStorage.getItem('myLibrary')) || [];
-  library.push(movie);
+  const movieToAdd = {
+    id: movie.id,
+    title: movie.title,
+    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+    backdrop_path: movie.backdrop_path,
+    release_date: movie.release_date,
+    vote_average: movie.vote_average,
+    vote_count: movie.vote_count,
+    popularity: movie.popularity,
+    overview: movie.overview,
+    genre_ids: movie.genre_ids,
+  };
+  library.push(movieToAdd);
   localStorage.setItem('myLibrary', JSON.stringify(library));
 };
 
@@ -95,11 +119,16 @@ const removeMovieFromLibrary = movieId => {
 };
 
 const handleLibraryToggle = (movie, button) => {
-  if (isMovieInLibrary(movie.id)) {
-    removeMovieFromLibrary(movie.id);
+  const movieWithFullPoster = {
+    ...movie,
+    poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+  };
+
+  if (isMovieInLibrary(movieWithFullPoster.id)) {
+    removeMovieFromLibrary(movieWithFullPoster.id);
     button.textContent = 'Add to my library';
   } else {
-    addMovieToLibrary(movie);
+    addMovieToLibrary(movieWithFullPoster);
     button.textContent = 'Remove from my library';
   }
 };
@@ -120,11 +149,12 @@ const renderUpcomingMovie = async () => {
     document.getElementById('upcoming-release-date').textContent =
       movie.release_date;
 
-    document.querySelector('.vote-average').textContent = movie.vote_average;
+    document.querySelector('.vote-average').textContent =
+      movie.vote_average.toFixed(1);
     document.querySelector('.vote-count').textContent = movie.vote_count;
 
     document.getElementById('upcoming-popularity').textContent =
-      movie.popularity;
+      movie.popularity.toFixed(1);
     document.getElementById('upcoming-overview').textContent = movie.overview;
     document.getElementById('upcoming-genre').textContent = genreText;
 

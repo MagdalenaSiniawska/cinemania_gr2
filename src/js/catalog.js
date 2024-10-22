@@ -1,11 +1,7 @@
 import { getTrending, getDetails } from './API.js';
-
 import { element, createElement } from './card_creator.js';
-
 import { openDetailsModal } from './hero_modals.js';
-
 import axios from 'axios';
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
@@ -16,32 +12,49 @@ const input = document.querySelector('#searchForm-input');
 const inputClear = document.querySelector('#searchForm-input-clear');
 const pagination = document.querySelector('#pagination');
 
-pagination.style.display = 'flex';
 inputClear.style.display = 'none';
-
-const renderElements = (films, rootList, callback) => {
-  const fragment = document.createDocumentFragment();
-  fragment.append(...films.map(callback));
-
-  rootList.append(fragment);
-};
-
-(async () => {
-  try {
-    const response = await getTrending('day');
-    renderElements(response.results, filmList, createElement);
-  } catch (error) {
-    catalog.innerHTML =
-      '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
-    console.log(error);
-  }
-})();
 
 let currentPage = 1;
 const API_KEY =
   'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2Y2IxMWQ4ZGE0NTZlOGI5OTIxM2EyNDk4ODM4OGQyNSIsIm5iZiI6MTcyODcyMDEzMC44MDY0Niwic3ViIjoiNjcwYTJiNDEzYmI0NTU3YzY2OWFmYzM5Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.Pgojbxf9JKo_J1qf6Qmglon5qZgkr9wpZ4I978dGQU8';
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 axios.defaults.headers.common['Authorization'] = API_KEY;
+
+const renderElements = (films, rootList, callback) => {
+  const fragment = document.createDocumentFragment();
+  fragment.append(
+    ...films.map(film => {
+      const filmElement = callback(film);
+
+      filmElement.addEventListener('click', async e => {
+        if (e.target.classList.contains('catalog-card')) {
+          try {
+            const details = await getDetails(film.id);
+            openDetailsModal(details);
+          } catch (error) {
+            console.log('Error fetching movie details:', error);
+          }
+        }
+      });
+
+      return filmElement;
+    })
+  );
+
+  rootList.append(fragment);
+};
+
+const fetchTrendingMovies = async () => {
+  try {
+    const response = await getTrending('day');
+    console.log(response);
+    renderElements(response.results, filmList, createElement);
+  } catch (error) {
+    filmList.innerHTML =
+      '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
+    console.log(error);
+  }
+};
 
 const searchMovies = async () => {
   try {
@@ -63,16 +76,16 @@ const search = async () => {
     filmList.innerHTML = '';
     renderElements(response.results, filmList, createElement);
   } catch (error) {
-    console.log(error);
+    console.log('Error in search:', error);
   }
 };
 
+// Funkcja do tworzenia paginacji
 const createPagination = async () => {
   try {
     const response = await searchMovies();
     const totalPages = response.total_pages;
     const visibleButtons = 5;
-
     pagination.innerHTML = '';
     pagination.style.display = 'flex';
     const prevEl = element('li', { classList: 'pagination-item' });
@@ -194,35 +207,32 @@ const createPagination = async () => {
     ).slice(1, -1);
     buttons.forEach(button => {
       if (button.textContent == currentPage) {
-        button.style.backgroundColor = 'red';
+        button.classList.add('pagination-btn-active');
       }
     });
-    console.log(buttons);
   } catch (error) {
     console.log(error);
   }
 };
 
+document.addEventListener('DOMContentLoaded', fetchTrendingMovies);
+
 form.addEventListener('submit', e => {
   e.preventDefault();
-
   if (input.value !== '') {
     filmList.innerHTML = '';
     pagination.innerHTML = '';
 
     (async () => {
       currentPage = 1;
-
       await search();
-
-      if (filmList.childElementCount === 0) {
-        pagination.style.display = 'none';
-        catalog.innerHTML =
-          '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
-      }
       await createPagination();
+      if (filmList.childElementCount === 0) {
+        filmList.innerHTML =
+          '<div class="catalog-oops"><h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p></div>';
+        pagination.style.display = 'none';
+      }
     })();
-
     inputClear.style.display = 'inline';
   } else {
     iziToast.info({
@@ -234,14 +244,5 @@ form.addEventListener('submit', e => {
 inputClear.addEventListener('click', e => {
   inputClear.style.display = 'none';
   pagination.style.display = 'none';
+  input.value = '';
 });
-
-// filmList.addEventListener('click', e => {
-//   e.preventDefault();
-//   if (!e.target.classList.contains('card-poster')) return;
-
-//   async () => {
-//     const details = await getDetails(movie.id);
-//     openDetailsModal(details);
-//   };
-// });

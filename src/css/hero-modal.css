@@ -1,3 +1,4 @@
+
 /* Styl dla tła modalnego */
 #modal-trailer {
   width: 100%;
@@ -299,3 +300,36 @@
     top: 40px;
   }
 }
+=======
+.modal {
+  display: none; /* Domyślnie ukryty */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Włącza przewijanie, jeśli potrzebne */
+  background-color: rgb(0, 0, 0); /* Czarny z przezroczystością */
+  background-color: rgba(0, 0, 0, 0.4); /* Czarny z przezroczystością */
+}
+
+.modal.show {
+  display: block; /* Wyświetla modal */
+}
+
+.modal-content {
+    background-color: white;
+    /* Kolor tła zawartości */
+    padding: 20px;
+    /* Padding */
+    border-radius: 5px;
+    /* Zaokrąglone rogi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Cień dla głębi */
+}
+
+.close-modal{
+    color: black;
+}
+
