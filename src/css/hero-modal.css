@@ -1,0 +1,301 @@
+/* Styl dla tła modalnego */
+#modal-trailer {
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  opacity: 1;
+  display: none;
+  position: fixed;
+  background-color: #111111;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styl dla zawartości modalnego */
+#modal-trailer .modal-content {
+  display: flex;
+  width: 280px;
+  height: 289px;
+  margin: auto;
+  background: #111111;
+  border-radius: 16px;
+  padding: 16px;
+  position: relative;
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 0.42);
+}
+
+/* Styl dla iframe z filmem */
+.modal-content iframe {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: block;
+}
+/* Styl dla okna z błędem (brak filmu) */
+.error-pop-up {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 280px;
+  height: 289px;
+  margin: 50px;
+  overflow: hidden;
+}
+
+.error-pop-up p {
+  margin-top: 30px;
+  padding: 0px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  z-index: 1;
+  color: #ffffff;
+}
+
+.error-pop-up img {
+  position: absolute;
+  bottom: 0;
+  width: 159px;
+  height: 153px;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Styl dla zawartości modalnego */
+#modal-details {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  overflow: auto;
+}
+/* Styl dla zawartości modalnego */
+#modal-details .modal-content {
+  display: flex;
+  flex-direction: column;
+
+  width: 280px;
+  height: 847px;
+  margin: auto;
+  background: #111111;
+  border-radius: 16px;
+  padding: 52px 16px;
+  position: relative;
+  box-shadow: 1px 1px 14px 4px rgba(255, 107, 8, 0.42);
+}
+.modal-image {
+  width: 248px;
+  height: 315px;
+  border-radius: 5px;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 22px;
+}
+
+.modal-text {
+  flex: 1;
+  padding: 0;
+  position: relative;
+}
+
+/* Movie Info Section on the Right */
+#modal-details .modal-content h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 23.44px;
+  text-align: left;
+  color: #fff;
+  margin-bottom: 29px;
+}
+.tags-grade-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 34px;
+}
+.tags-grade-wrap p {
+  margin-top: 12px;
+}
+#modal-details .modal-content p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18.16px;
+  text-align: left;
+  color: #ffffff;
+}
+#modal-details .modal-content p strong {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  color: #b7b7b7;
+}
+.modal-text-about {
+  margin-top: 20px;
+}
+#modal-details .modal-content .modal-text-about {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: left;
+  color: #f8f8f8;
+}
+
+.close-modal {
+  cursor: pointer;
+  font-size: 24px;
+  color: white;
+  position: absolute;
+  right: 16px;
+  top: 20px;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: #f87719;
+}
+.add-to-library-btn {
+  margin-top: 16px;
+  background-color: transparent;
+  border: 1px solid #f87719;
+  padding: 12px 24px 12px 24px;
+  gap: 10px;
+  border-radius: 50px;
+  border: 1px 0px 0px 0px;
+  opacity: 0px;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: center;
+}
+
+.add-to-library-btn:hover {
+  background-color: #fff;
+  border: 1px solid #fff;
+  color: #f87719;
+}
+@media screen and (min-width: 768px) {
+  #modal-trailer .modal-content {
+    width: 609px;
+    height: 400px;
+    padding: 44px;
+  }
+
+  .error-pop-up {
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+  }
+  .error-pop-up p {
+    margin: 0;
+    padding: 0;
+    font-size: 24px;
+    line-height: 1.7;
+  }
+  .error-pop-up img {
+    right: 0;
+    width: 296px;
+    height: 260px;
+  }
+
+  #modal-details .modal-content {
+    flex-direction: row;
+    width: 704px;
+    height: 488px;
+    padding: 44px;
+  }
+  .modal-image {
+    width: 294px;
+    height: 400px;
+    margin-right: 16px;
+    margin-bottom: 0;
+  }
+
+  #modal-details .modal-content h2 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 26px;
+  }
+
+  #modal-details .modal-content p strong {
+    line-height: 18.75px;
+  }
+
+  .add-to-library-btn {
+    margin-top: 24px;
+  }
+
+  .close-modal {
+    right: 24px;
+    top: 24px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  #modal-trailer .modal-content {
+    width: 700px;
+    height: 400px;
+    border-radius: 20px;
+    padding: 60px;
+  }
+
+  .error-pop-up img {
+    width: 363px;
+    height: 318px;
+  }
+
+  #modal-details .modal-content {
+    width: 846px;
+    height: 598px;
+    border-radius: 20px;
+    padding: 60px;
+  }
+  .modal-image {
+    width: 375px;
+    height: 478px;
+    margin-right: 20px;
+  }
+
+  #modal-details .modal-content h2 {
+    font-size: 24px;
+    line-height: 32px;
+    margin-bottom: 28px;
+  }
+
+  .tags-grade-wrap p {
+    margin-top: 13px;
+  }
+  #modal-details .modal-content p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 18.75px;
+  }
+  #modal-details .modal-content p strong {
+    font-size: 16px;
+    line-height: 18.75px;
+  }
+
+  #modal-details .modal-content .modal-text-about {
+    font-size: 14px;
+  }
+
+  .close-modal {
+    right: 40px;
+    top: 40px;
+  }
+}
