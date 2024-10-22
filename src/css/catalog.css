@@ -1,0 +1,120 @@
+.catalog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.film-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-block: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.catalog-card {
+  cursor: pointer;
+  border-radius: 10px;
+  position: relative;
+  min-width: 280px;
+  max-width: 280px;
+  height: 406px;
+  flex: 1;
+  color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.catalog-card-poster {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.catalog-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 10px;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 63%,
+    rgba(0, 0, 0, 0.7) 92%
+  );
+}
+.catalog-card-description {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+  line-height: 20px;
+  z-index: 2;
+}
+
+.catalog-card-description-sub {
+  display: flex;
+}
+.catalog-card-description-sub-sub {
+  display: flex;
+  justify-content: space-between;
+}
+.catalog-card-title {
+  font-size: 12px;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 500;
+  line-height: 20px;
+  margin: 0;
+  z-index: 2;
+}
+
+.catalog-star-rating {
+  display: flex;
+  align-items: end;
+}
+.catalog-star-rating .star-rating {
+  margin: 0;
+}
+.catalog-star-rating .star-rating * {
+  font-size: 14px;
+}
+
+.catalog-oops {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) and (max-width: 1157px) {
+  .catalog-card {
+    min-width: 224px;
+    max-width: 224px;
+    height: 325px;
+  }
+  .catalog-card-description {
+    line-height: 18px;
+  }
+}
+@media (min-width: 1158px) {
+  .catalog-card {
+    min-width: 394px;
+    max-width: 394px;
+    height: 574px;
+  }
+  .catalog-star-rating .star-rating * {
+    font-size: 25px;
+  }
+}

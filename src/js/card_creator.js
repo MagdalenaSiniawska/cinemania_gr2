@@ -11,41 +11,45 @@ export const createElement = ({
   release_date,
   vote_average,
 }) => {
-  const card = element('li', { className: 'card' });
+  const card = element('li', { className: 'catalog-card' });
 
   const poster = element('img', {
-    className: 'card-poster',
+    className: 'catalog-card-poster',
     src: `https://image.tmdb.org/t/p/original/${poster_path}`,
-    width: 200,
-    height: 300,
   });
 
   const description = element('div', {
-    className: 'card-description',
+    className: 'catalog-card-description',
   });
 
   const filmTitle = element('p', {
-    className: 'card-title',
-    textContent: title,
+    className: 'catalog-card-title',
+    textContent: title.toUpperCase(),
+  });
+  const descriptionSub = element('div', {
+    className: 'catalog-card-description-sub',
   });
 
   const genres = element('p', {
-    className: 'card-description-element',
+    className: 'catalog-card-description-element',
   });
   convertGenreIdsToNames(genre_ids).then(genreNames => {
-    genres.textContent = `${genreNames.join(', ')} |`;
+    genres.textContent = `${genreNames
+      .slice(0, 2)
+      .join(', ')} | ${release_date.slice(0, 4)}`;
   });
 
-  const year = element('p', {
-    className: 'card-description-element',
-    textContent: release_date.slice(0, 4),
+  const descriptionSubSub = element('div', {
+    className: 'catalog-card-description-sub-sub',
   });
   const stars = element('p', {
-    className: 'star-rating',
+    className: 'catalog-star-rating',
     innerHTML: displayStarRating(vote_average),
   });
 
-  description.append(genres, year, stars);
-  card.append(poster, filmTitle, description);
+  descriptionSub.append(genres);
+  descriptionSubSub.append(descriptionSub, stars);
+  description.append(filmTitle, descriptionSubSub);
+  card.append(poster, description);
   return card;
 };

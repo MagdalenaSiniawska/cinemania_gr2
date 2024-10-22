@@ -27,7 +27,7 @@ const renderElements = (films, rootList, callback) => {
       const filmElement = callback(film);
 
       filmElement.addEventListener('click', async e => {
-        if (e.target.classList.contains('card-poster')) {
+        if (e.target.classList.contains('catalog-card')) {
           try {
             const details = await getDetails(film.id);
             openDetailsModal(details);
@@ -47,9 +47,10 @@ const renderElements = (films, rootList, callback) => {
 const fetchTrendingMovies = async () => {
   try {
     const response = await getTrending('day');
+    console.log(response);
     renderElements(response.results, filmList, createElement);
   } catch (error) {
-    catalog.innerHTML =
+    filmList.innerHTML =
       '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
     console.log(error);
   }
@@ -206,7 +207,7 @@ const createPagination = async () => {
     ).slice(1, -1);
     buttons.forEach(button => {
       if (button.textContent == currentPage) {
-        button.style.backgroundColor = 'red';
+        button.classList.add('pagination-btn-active');
       }
     });
   } catch (error) {
@@ -225,12 +226,12 @@ form.addEventListener('submit', e => {
     (async () => {
       currentPage = 1;
       await search();
-      if (filmList.childElementCount === 0) {
-        pagination.style.display = 'none';
-        catalog.innerHTML =
-          '<h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p>';
-      }
       await createPagination();
+      if (filmList.childElementCount === 0) {
+        filmList.innerHTML =
+          '<div class="catalog-oops"><h2>OOPS!</h2><p>We are very sorry! We don’t have any results matching your search.</p></div>';
+        pagination.style.display = 'none';
+      }
     })();
     inputClear.style.display = 'inline';
   } else {

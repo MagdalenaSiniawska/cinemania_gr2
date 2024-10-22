@@ -1,0 +1,33 @@
+.pagination,
+.page-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.pagination-btn {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #b7b7b7;
+  border-radius: 50%;
+  background: none;
+  color: #b7b7b7;
+}
+
+.prev-page,
+.next-page {
+  font-size: 30px;
+  border: none;
+}
+
+.prev-page:disabled,
+.next-page:disabled {
+  cursor: default;
+}
+
+.pagination-btn-active {
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #ffc226 0%, #f84119 100%);
+}
