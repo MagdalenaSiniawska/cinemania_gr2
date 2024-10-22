@@ -1,118 +1,81 @@
 // Modal dla zwiastuna filmu
 export const openTrailerModal = trailerData => {
-  console.log('Trying to open trailer modal with data:', trailerData);
   const modalTrailer = document.getElementById('modal-trailer');
-
-  // Sprawdzamy, czy istnieje modal
-  if (!modalTrailer) {
-    console.error('Modal element not found!');
-    return;
-  }
-
-  // Logujemy trailerData, aby sprawdzić, czy zawiera poprawne dane
-  console.log('Trailer data:', trailerData);
-
-  // Znalezienie zwiastuna w wynikach
   const trailer = trailerData.results.find(vid => vid.type === 'Trailer');
+  const trailerBtn = document.querySelector('#watch-trailer');
+
+  trailerBtn.addEventListener('click', () => {
+    modalTrailer.style.display.block;
+  });
   if (trailer) {
-    // Jeżeli zwiastun znaleziony, wstaw iframe do modala
-    modalTrailer.innerHTML = `
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}" 
-          frameborder="0" allowfullscreen></iframe>
-      </div>
-    `;
-    console.log(
-      'Trailer found, iframe set:',
-      `https://www.youtube.com/embed/${trailer.key}`
-    );
+    modalTrailer.innerHTML = `          <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/${trailer.key}"
+              frameborder="0" allowfullscreen></iframe>
+          </div>
+        `;
   } else {
-    // Jeśli brak zwiastuna, pokazujemy komunikat o błędzie
-    modalTrailer.innerHTML = `
-      <div class="modal-content error-pop-up">
-        <span class="close-modal">&times;</span>
-        <img src="../images/oops-logo.png" alt="camera icon with popcorn" width="363" height="318"/>
-        <p>OOPS... We are very sorry! But we couldn’t find the trailer.</p>
-      </div>
-    `;
-    console.warn('No trailer found.');
+    modalTrailer.innerHTML = `<div class="modal-content error-pop-up">
+            <span class="close-modal">&times;</span>
+              <p>OOPS... </br>We are very sorry! </br>But we couldn’t find the trailer.</p>
+               <img src="../images/oops-logo.png" alt="camera icon with popcorn" width="363" height="318"/>
+          </div>
+        `;
   }
 
   modalTrailer.style.display = 'block';
-  console.log(
-    'Modal style after setting to block:',
-    window.getComputedStyle(modalTrailer).display
-  );
+  // Zamknięcie modala dla zwiastuna filmu przez ikonę zamknięcia
+  modalTrailer.querySelector('.close-modal').addEventListener('click', () => {
+    modalTrailer.style.display = 'none';
+    modalTrailer.innerHTML = '';
+  });
 
-  // Zamknięcie modala przez kliknięcie w ikonę zamknięcia
-  modalTrailer
-    .querySelector('.close-modal')
-    .addEventListener('click', event => {
-      event.stopPropagation();
-      modalTrailer.style.display = 'none';
-      console.log('Modal closed via close button.');
-    });
-
-  // Zabezpieczenie przed przypadkowym zamknięciem przez kliknięcie w zawartość modala
-  modalTrailer
-    .querySelector('.modal-content')
-    .addEventListener('click', event => {
-      event.stopPropagation();
-    });
-
-  // Zamknięcie modala przez kliknięcie w tło (ale nie w modal-content)
+  // Zamknięcie modala przez kliknięcie w tło modala
   modalTrailer.addEventListener('click', event => {
     if (event.target === modalTrailer) {
       modalTrailer.style.display = 'none';
-      console.log('Modal closed by clicking outside modal-content.');
+      modalTrailer.innerHTML = '';
     }
   });
 };
 
 // Modal dla szczegółów filmu
+
 export const openDetailsModal = details => {
   const modalDetails = document.getElementById('modal-details');
-
-  console.log('Modal element:', modalDetails); // Dodaj ten log
-  console.log('Modal is visible:', modalDetails.style.display); // Dodaj ten log
-
-  if (!modalDetails) {
-    console.error('Modal element not found!');
-    return;
-  }
-
-  const voteAverage = details.vote_average.toFixed(1);
-  const voteCount = details.vote_count;
-  const popularity = details.popularity.toFixed(1);
 
   const backgroundImage = details.backdrop_path
     ? `https://image.tmdb.org/t/p/original/${details.backdrop_path}`
     : `https://image.tmdb.org/t/p/original/${details.poster_path}`;
 
-  modalDetails.innerHTML = `
-    <div class="modal-content" style="background-image: url('${backgroundImage}'); background-size: cover; background-position: center; padding: 20px; color: white;">
-      <span class="close-modal" style="cursor: pointer; font-size: 24px;">&times;</span>
-      <h2>${details.title}</h2>
-      <p><strong>Vote / Votes:</strong> ${voteAverage} / ${voteCount}</p>
-      <p><strong>Popularity:</strong> ${popularity}</p>
-      <p><strong>Genres:</strong> ${details.genres
-        .map(genre => genre.name)
-        .join(', ')}</p>
-      <p><strong>Overview:</strong> ${details.overview}</p>
-      <button id="add-to-library" class="add-to-library-btn">Add to my library</button>
+  modalDetails.innerHTML = ` <div class="modal-content">
+      <span class="close-modal">&times;</span> <!-- Przeniesiono przycisk zamykania tutaj -->
+      <div class="modal-image" style="background-image: url('${backgroundImage}');"></div>
+      <div class="modal-text">
+        <h3 class="modal-title">${details.title}</h3>
+        <div class="tags-grade-wrap">
+        <div>
+        <p><strong>Vote / Votes:</strong></p>
+        <p><strong>Popularity:</strong></p>
+        <p><strong>Genres:</strong></p>
+</div><div>
+<p> ${details.vote_average} / ${details.vote_count}</p>        
+<p> ${details.popularity.toFixed(1)}</p>          
+<p> ${details.genres.map(genre => genre.name).join(', ')}</p>
+    </div></div>
+    <div class="modal-text-about">
+        <p ><strong>ABOUT:</strong></p>
+        <p class="modal-text-about">${details.overview}</p>
+    </div>
+        <button id="add-to-library" class="add-to-library-btn">Add to my library</button>
+      </div>
     </div>
   `;
+
   modalDetails.style.display = 'block';
-  console.log('Modal should now be displayed:', modalDetails.style.display);
 
-  // Ustaw modal na widoczny
-  modalDetails.classList.add('show');
-  console.log('Modal should be shown');
-
-  // Zamknięcie modala dla szczegółów filmu przez ikonę zamknięcia
+  // Zamknięcie modala dla szczegółów filmu przez ikonę zamknięciamodalDetails.querySelector('.close-modal').addEventListener('click', () => {
   modalDetails.querySelector('.close-modal').addEventListener('click', () => {
-    console.log('Close modal clicked'); // Dodaj ten log
     modalDetails.style.display = 'none';
   });
 
@@ -122,7 +85,6 @@ export const openDetailsModal = details => {
       modalDetails.style.display = 'none';
     }
   });
-
   // Dodanie filmu do biblioteki po kliknięciu w przycisk "Add to my library"
   const addToLibraryButton = document.getElementById('add-to-library');
   addToLibraryButton.addEventListener('click', event => {
