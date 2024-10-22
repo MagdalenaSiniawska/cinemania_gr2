@@ -51,6 +51,7 @@
   border: none;
 }
 
+#genre-select:hover,
 #genre-select option:hover {
   background-color: var(--secondary-black);
   color: var(--orange);
@@ -60,33 +61,32 @@
   border-color: var(--orange);
 }
 
-#catalog {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
 .movies-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  padding: 20px;
+  gap: 16px;
+  margin-block: 30px;
+  justify-content: center;
+  align-items: center;
 }
 
-.movies-list .movie-card {
+.movies-list .film-card {
+  position: relative;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 10px;
   position: relative;
-  height: 500px;
-  /* lub inna wartość, w zależności od wymagań */
+  min-width: 280px;
+  max-width: 280px;
+  height: 406px;
+  flex: 1;
   color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
-.movies-list .movie-card::after {
+.movies-list .film-card::after {
   content: '';
   position: absolute;
   top: 0;
@@ -95,41 +95,63 @@
   bottom: 0;
   border-radius: 10px;
   z-index: 1;
-  background: linear-gradient(to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0) 63%,
-      rgba(0, 0, 0, 0.7) 92%);
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 63%,
+    rgba(0, 0, 0, 0.7) 92%
+  );
 }
 
-.movies-list .movie-card img {
+.movies-list .film-poster {
   width: 100%;
-  height: 100%;
   border-radius: 10px;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 0;
-  object-fit: cover;
 }
 
-.movies-list .movie-card .card-info {
+.movies-list .film-card-descr {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 10px;
+  font-size: 12px;
+  color: white;
+  font-weight: 500;
+  line-height: 20px;
   z-index: 2;
 }
 
-.movies-list .movie-card h3 {
-  font-size: 18px;
-  color: #ffdd00;
+.movies-list .film-card-title {
+  font-size: 12px;
+  color: white;
+  font-family: 'Roboto';
+  font-weight: 500;
+  line-height: 20px;
   margin: 0;
+  z-index: 2;
 }
 
 .movies-list .movie-card p {
   font-size: 14px;
   color: #bbb;
+}
+
+.movies-list .star-rating {
+  position: absolute;
+  top: 50px;
+  left: 190px;
+  margin: 0;
+}
+
+.movies-list .star-rating * {
+  font-size: 14px;
 }
 
 #load-more {
@@ -178,6 +200,25 @@
 
 .empty-library button:hover {
   background-color: var(--orange);
+}
+
+.film-card .remove-movie {
+  cursor: pointer;
+  z-index: 4;
+  position: absolute;
+  left: 250px;
+  top: 5px;
+  background: none;
+  color: var(--orange);
+  border: 1px solid var(--orange);
+  border-radius: 50%;
+}
+
+.film-card .remove-movie:hover {
+  background: var(--orange);
+  color: var(--white);
+  border: 1px solid var(--white);
+  border-radius: 50%;
 }
 
 /* Wprowadź nowe style dla układu kart filmów */
