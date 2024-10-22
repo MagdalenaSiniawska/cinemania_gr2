@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My-library</title>
+    <script type="module" crossorigin src="/cinemania_gr2/library.js"></script>
+    <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/vendor-nSNXNpMc.js">
+    <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/footer-DQzmd3O7.js">
+    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/vendor-DnveWo0P.css">
+    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/footer-CBLB9uk8.css">
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My-library</title>
-  <script type="module" crossorigin src="/cinemania_gr2/library.js"></script>
-  <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/vendor-nSNXNpMc.js">
-  <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/footer-BCtfmS9H.js">
-  <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/vendor-DnveWo0P.css">
-  <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/footer-DWKen9aI.css">
-</head>
-
-<body>
-  <header>
-    <div class="header">
+  <body>
+    <header>
+      <div class="header">
   <div class="header-logo">
     <a href="./index.html">
       <img src="data:image/png;base64,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" alt="cinemania logo" />
@@ -69,44 +68,51 @@
   </div>
 </div>
 
-  </header>
-  <main>
-    <section class="lib-hero">
-      <div class="library-container">
-        <div class="library-text-container">
-          <h1 class="library-title">Create Your<br>Dream Cinema</h1>
-          <p class="library-text">
-            Is a guide to designing a personalized movie theater experience
-            with the right equipment, customized decor, and favorite films.
-            This guide helps you bring the cinema experience into your own
-            home with cozy seating, dim lighting, and movie theater snacks.
-          </p>
+    </header>
+    <main>
+      <section class="lib-hero">
+        <div class="library-container">
+          <div class="library-text-container">
+            <h1 class="library-title">Create Your<br />Dream Cinema</h1>
+            <p class="library-text">
+              Is a guide to designing a personalized movie theater experience
+              with the right equipment, customized decor, and favorite films.
+              This guide helps you bring the cinema experience into your own
+              home with cozy seating, dim lighting, and movie theater snacks.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <div id="filters">
+        <select id="genre-select">
+          <!-- Opcje gatunków zostaną dodane w JavaScript -->
+        </select>
       </div>
-    </section>
 
-    <div id="filters">
-      <select id="genre-select">
-        <!-- Opcje gatunków zostaną dodane w JavaScript -->
-      </select>
-    </div>
+      <section
+        id="catalog"
+        class="movies-list"
+        aria-labelledby="catalog-header"
+      >
+        <h2 id="catalog-header">Movie Catalog</h2>
+        <div class="catalog-films"></div>
+      </section>
 
-    <section id="catalog" class="movies-list" aria-labelledby="catalog-header">
-      <h2 id="catalog-header">Movie Catalog</h2>
-    </section>
+      <div id="modal-details" class="modal"></div>
 
-    <div id="modal-details" class="modal"></div>
+      <button id="load-more">Load More</button>
 
-    <button id="load-more">Load More</button>
-
-    <section class="empty-library" id="empty-library" style="display: none">
-      <h2>OOPS...</h2>
-      <p>You don't have any movies in your library.</p>
-      <a href="./catalog.html"><button id="searchMovieBtn">Search Movie</button></a>
-    </section>
-  </main>
-  <footer>
-    <footer class="footer">
+      <section class="empty-library" id="empty-library" style="display: none">
+        <h2>OOPS...</h2>
+        <p>You don't have any movies in your library.</p>
+        <a href="./catalog.html"
+          ><button id="searchMovieBtn">Search Movie</button></a
+        >
+      </section>
+    </main>
+    <footer>
+      <footer class="footer">
   <div class="footer-text-wrap">
     <p class="footer-paragraph">© 2024 | All Rights Reserved |</p>
     <p class="footer-paragraph">
@@ -177,14 +183,14 @@
         </li>
         <li>
           <ul class="modal-credits-person">
-            <li class="modal-credits-name">Lucas Kalinowski</li>
-            <li class="modal-credits-role">Developer</li>
+            <li class="modal-credits-name name-inactive">Lucas Kalinowski</li>
+            <li class="modal-credits-role name-inactive">Developer</li>
           </ul>
         </li>
         <li>
           <ul class="modal-credits-person">
-            <li class="modal-credits-name">Daniel Szul</li>
-            <li class="modal-credits-role">Developer</li>
+            <li class="modal-credits-name name-inactive">Daniel Szul</li>
+            <li class="modal-credits-role name-inactive">Developer</li>
           </ul>
         </li>
       </ul>
@@ -192,7 +198,6 @@
   </div>
 </div>
 
-  </footer>
-</body>
-
+    </footer>
+  </body>
 </html>
