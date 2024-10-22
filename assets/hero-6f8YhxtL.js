@@ -1,4 +1,4 @@
-import{g as v,d as f,a as L}from"./footer-BRG6CyJb.js";const w=t=>{console.log("Trying to open trailer modal with data:",t);const e=document.getElementById("modal-trailer");if(!e){console.error("Modal element not found!");return}console.log("Trailer data:",t);const r=t.results.find(o=>o.type==="Trailer");r?(e.innerHTML=`
+import{g as v,d as f,a as L}from"./footer-BCtfmS9H.js";const w=t=>{console.log("Trying to open trailer modal with data:",t);const e=document.getElementById("modal-trailer");if(!e){console.error("Modal element not found!");return}console.log("Trailer data:",t);const r=t.results.find(o=>o.type==="Trailer");r?(e.innerHTML=`
       <div class="modal-content">
         <span class="close-modal">&times;</span>
         <iframe width="560" height="315" src="https://www.youtube.com/embed/${r.key}" 
@@ -35,4 +35,4 @@ import{g as v,d as f,a as L}from"./footer-BRG6CyJb.js";const w=t=>{console.log("
         <button id="more-details">More Details</button>
       </div>
     `,document.getElementById("watch-trailer").addEventListener("click",async()=>{const o=await f(r.id);w(o)}),document.getElementById("more-details").addEventListener("click",async()=>{const o=await L(r.id);k(o)})}catch(t){console.error("Error fetching trending movies:",t);const e="../images/hero-desktop.jpg",r="../images/hero-tablet.jpg",o="../images/hero-mobile.jpg";window.innerWidth>=1024?i.style.backgroundImage=`url(${e})`:window.innerWidth>=768?i.style.backgroundImage=`url(${r})`:i.style.backgroundImage=`url(${o})`,i.innerHTML=y}};E();export{M as d,k as o};
-//# sourceMappingURL=hero-BM8Da8_3.js.map
+//# sourceMappingURL=hero-6f8YhxtL.js.map
