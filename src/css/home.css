@@ -156,7 +156,7 @@
   margin-bottom: 10px;
 }
 
-#add-library-button {
+.home-add-library-btn {
   background: linear-gradient(135deg, #ffc226 0%, #f84119 100%);
   border: none;
   padding: 12px 24px;
@@ -167,7 +167,7 @@
   transition: background-color 0.3s ease;
 }
 
-#upcoming-release-date {
+.home-upcoming-relerase-date {
   color: var(--orange);
   font-weight: bold;
 }
@@ -179,7 +179,7 @@
   text-align: left;
 }
 
-#upcoming-vote {
+.home-upcoming-vote {
   display: flex;
   align-items: center;
   gap: 5px;

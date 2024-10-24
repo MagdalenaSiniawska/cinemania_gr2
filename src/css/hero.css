@@ -9,20 +9,19 @@
   text-align: left;
 }
 
-.h1,
-h2 {
+.hero-header {
   font-size: 32px;
   font-weight: 700;
   line-height: 37.5px;
   display: flex;
   flex-wrap: wrap;
-  /* margin-top: 40px;
-  margin-left: 20px; */
+  margin-top: 40px;
+  margin-left: 20px;
   margin-bottom: 0;
 }
 
 .star-rating {
-  display: flex;
+  /* display: flex; */
   gap: 5px;
   margin-left: 20px;
   margin-bottom: 20px;
@@ -80,8 +79,8 @@ h2 {
   font-weight: 400;
 }
 
-#watch-trailer {
-  background-color: rgba(248, 119, 25, 1);
+.watch-trailer-btn {
+  background: linear-gradient(135deg, #ffc226 0%, #f84119 100%);
   color: white;
   border: none;
   padding: 12px 20px;
@@ -94,13 +93,13 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-#watch-trailer:hover {
+.watch-trailer-btn:hover {
   background-color: white;
   color: rgba(248, 119, 25, 1);
   border-color: 1px rgba(248, 119, 25, 1) solid;
 }
 
-#more-details {
+.more-details-btn {
   background-color: transparent;
   color: white;
   border: 1px white solid;
@@ -111,14 +110,14 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-#more-details:hover {
+.more-details-btn:hover {
   background-color: transparent;
   color: rgba(248, 119, 25, 1);
   border-color: 1px rgba(248, 119, 25, 1) solid;
 }
 
-#get-started {
-  background-color: rgba(248, 119, 25, 1);
+.get-started-btn {
+  background: linear-gradient(135deg, #ffc226 0%, #f84119 100%);
   color: white;
   border: none;
   padding: 12px 20px;
@@ -131,15 +130,14 @@ h2 {
   transition: background-color 0.3s ease;
 }
 
-#get-started:hover {
+.get-started-btn:hover {
   background-color: white;
   color: rgba(248, 119, 25, 1);
   border-color: 1px rgba(248, 119, 25, 1) solid;
 }
 
 @media screen and (min-width: 768px) {
-  .h1,
-  h2 {
+  .hero-header {
     font-size: 44px;
     font-weight: 700;
     line-height: 51.56px;
@@ -174,20 +172,19 @@ h2 {
     line-height: 16.41px;
     font-weight: 400;
   }
-  #watch-trailer {
+  .watch-trailer-btn {
     margin-left: 32px;
     margin-bottom: 63px;
   }
 
-  #get-started {
+  .get-started-btn {
     margin-left: 32px;
     margin-bottom: 63px;
   }
 }
 
 @media screen and (min-width: 1158px) {
-  .h1,
-  h2 {
+  .hero-header {
     font-size: 64px;
     font-weight: 700;
     line-height: 75px;
@@ -226,17 +223,19 @@ h2 {
     font-weight: 400;
   }
 
-  #watch-trailer {
+  .watch-trailer-btn {
     margin-left: 135px;
     margin-bottom: 181px;
   }
 
-  #get-started {
+  .get-started-btn {
     margin-left: 135px;
     margin-bottom: 181px;
   }
 }
 .hero-header {
-  margin-top: 10px;
-  margin-left: 10px;
+  font-size: 64px;
+  line-height: 75px;
+  margin-top: 118px;
+  margin-left: 135px;
 }

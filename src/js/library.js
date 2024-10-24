@@ -2,14 +2,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const catalog = document.querySelector('#catalog');
   const genreSelect = document.querySelector('#genre-select');
   const loadMoreBtn = document.querySelector('#load-more');
+  const catFilms = document.querySelector('.catalog-films');
 
   let displayedMovies = 0;
   const moviesPerPage = 6;
   let allMovies = [];
-  let filteredMovies = []; // Zmienna do przechowywania przefiltrowanych filmów
+  let filteredMovies = [];
 
-  // Lista gatunków (w małych literach)
-  const genres = ['action', 'drama', 'comedy', 'horror', 'thriller'];
+  const genres = ['action', 'adventure', 'animation', 'comedy', 'crime', 'documentary', 'drama', 'family', 'fantasy', 'horror', 'kids', 'mystery', 'news', 'politics', 'reality', 'sci-fi', 'soap', 'talk', 'thriller', 'war', 'western'];
 
   const populateGenres = () => {
     const defaultOption = document.createElement('option');
@@ -62,24 +62,39 @@ document.addEventListener('DOMContentLoaded', () => {
     movies.forEach(movie => {
       const movieElement = document.createElement('div');
       movieElement.classList.add('film-card');
-      console.log(movie);
       const rating = movie.vote_average;
 
+      const posterUrl = movie.poster ? `https://image.tmdb.org/t/p/w500${movie.poster}` : 'default-image-url.jpg';
+
       movieElement.innerHTML = `
-                <img src="https://image.tmdb.org/t/p/w500${
-                  movie.poster || ''
-                }" alt="${movie.title || ''} poster" class="film-poster"/>
+                <button class="remove-movie" aria-label="Remove movie" data-title="${movie.title}">&times;</button>
+                <img src="${posterUrl}" alt="${movie.title || ''} poster" class="film-poster"/>
                 <div class ="film-card-descr">
-                <h3 class ="film-card-title">${movie.title || ''}</h3>
-                <p class ="film-card-genre">${
-                  movie.genres.slice(0, 2).join(', ') || 'N/A'
-                }</p>
-                <p class ="film-card-year"> ${movie.year || ''}</p>
-                <p class ="film-card-stars">${
-                  displayStarRating(rating) || ''
-                }</p>
+                  <h3 class ="film-card-title">${movie.title || ''}</h3>
+                  <p class ="film-card-genre">${movie.genres?.slice(0, 2).join(', ') || 'N/A'}</p>
+                  <p class ="film-card-year">${movie.year || ''}</p>
+                  <p class ="film-card-stars">${displayStarRating(rating) || ''}</p>
                 </div>
             `;
+
+      const removeButton = movieElement.querySelector('.remove-movie');
+
+      // Dodanie funkcji usuwania filmu
+      removeButton.addEventListener('click', () => {
+        const movieTitle = movie.title; // Pobieramy tytuł filmu z obiektu "movie"
+
+        let myLibrary = JSON.parse(localStorage.getItem('myLibrary')) || [];
+
+        // Sprawdzamy, czy mamy w bibliotece film o tym tytule
+        const updatedLibrary = myLibrary.filter(m => m.title !== movieTitle);
+
+        // Aktualizacja localStorage po usunięciu filmu
+        localStorage.setItem('myLibrary', JSON.stringify(updatedLibrary));
+
+        // Odświeżenie wyświetlania filmów po usunięciu
+        loadMovies();
+      });
+
       fragment.appendChild(movieElement);
     });
 
@@ -91,17 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
     return Array.isArray(myLibrary) ? myLibrary : [];
   };
 
-  const catFilms = document.querySelector('.catalog-films');
   const loadMovies = () => {
     allMovies = fetchMoviesFromLibrary();
     catFilms.innerHTML = '';
-    filteredMovies = allMovies; // Na początku wyświetlamy wszystkie filmy
+    filteredMovies = allMovies;
 
     if (!Array.isArray(allMovies) || allMovies.length === 0) {
       console.warn('No movies found in library or library is not an array.');
-      document.querySelector('#empty-library').style.display = 'block';
+      document.querySelector('#empty-library').style.display = '';
       loadMoreBtn.style.display = 'none';
-
       return;
     }
 
@@ -124,15 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
       displayedMovies >= filteredMovies.length ? 'none' : 'block';
   });
 
-  // Filtrowanie po kategorii wśród zapisanych filmów
   genreSelect.addEventListener('change', e => {
     const selectedGenre = e.target.value;
 
-    // Filtrowanie filmów
     filteredMovies = allMovies.filter(movie => {
       return (
         selectedGenre === 'all' ||
-        movie.genres.map(g => g.toLowerCase()).includes(selectedGenre)
+        (movie.genres && movie.genres.map(g => g.toLowerCase()).includes(selectedGenre))
       );
     });
 
@@ -144,33 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
       displayedMovies >= filteredMovies.length ? 'none' : 'block';
   });
 
-  // Ładowanie zapisanych filmów po załadowaniu strony
-  populateGenres(); // Dodaj gatunki do selecta
+  const searchMovieBtn = document.querySelector('.lib-empty-library-btn');
+  searchMovieBtn.addEventListener('click', () => {
+    window.location.href = 'catalog.html';
+  });
+
+  populateGenres();
   loadMovies();
-});
-
-//Genre
-const genreSelect = document.querySelector('#genre-select');
-genreSelect.addEventListener('change', e => {
-  const selectedGenre = e.target.value;
-
-  const options = document.querySelectorAll('#genre-select option');
-  options.forEach(option => (option.style.color = '#fff'));
-
-  const selectedOption = options[genreSelect.selectedIndex];
-  selectedOption.style.color = 'orange';
-
-  let filteredMovies;
-
-  if (selectedGenre === 'all') {
-    filteredMovies = allMovies;
-  } else {
-    filteredMovies = allMovies.filter(movie =>
-      movie.genre_ids.includes(Number(selectedGenre))
-    );
-  }
-
-  catFilms.innerHTML = '';
-  renderElements(filteredMovies.slice(0, moviesPerPage), catFilms);
-  displayedMovies = moviesPerPage;
 });

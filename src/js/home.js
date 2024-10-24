@@ -77,7 +77,7 @@ const renderTrendingMovies = async () => {
       movieElement.addEventListener('click', async () => {
         const movieDetails = {
           ...movie,
-          genres: genreNames,
+          genres: genreNames.map(name => ({ name })),
         };
         openDetailsModal(movieDetails);
       });
