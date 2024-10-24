@@ -31,7 +31,7 @@
   font-family: 'Roboto';
 }
 
-#genre-select {
+.lib-genre-select {
   padding: 10px 20px;
   background-color: var(--background);
   color: var(--white);
@@ -44,20 +44,20 @@
   margin-left: 25px;
 }
 
-#genre-select option {
+.lib-genre-select option {
   color: var(--white);
   background-color: black;
   padding: 20px;
   border: none;
 }
 
-#genre-select:hover,
-#genre-select option:hover {
+.lib-genre-select:hover,
+.lib-genre-select option:hover {
   background-color: var(--secondary-black);
   color: var(--orange);
 }
 
-#genre-select:focus {
+.lib-genre-select:focus {
   border-color: var(--orange);
 }
 
@@ -154,7 +154,7 @@
   font-size: 14px;
 }
 
-#load-more {
+.lib-load-more {
   display: block;
   margin: 40px auto;
   padding: 10px 20px;
@@ -166,11 +166,11 @@
   cursor: pointer;
 }
 
-#load-more:hover {
+.lib-load-more:hover {
   background-color: var(--orange);
 }
 
-.empty-library {
+.lib-empty-library {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -178,17 +178,17 @@
   height: 400px;
 }
 
-.empty-library h2 {
+.lib-empty-library-header {
   font-size: 40px;
   color: var(--white);
 }
 
-.empty-library p {
+.lib-empty-library-description {
   font-size: 19px;
   margin-bottom: 20px;
 }
 
-.empty-library button {
+.lib-empty-library-btn {
   padding: 10px 20px;
   background-color: var(--orange);
   border: none;
@@ -198,7 +198,7 @@
   cursor: pointer;
 }
 
-.empty-library button:hover {
+.lib-empty-library-btn:hover {
   background-color: var(--orange);
 }
 
@@ -261,14 +261,14 @@
     padding: 0;
   }
 
-  #load-more {
+  .lib-load-more {
     font-size: 14px;
     padding: 8px 16px;
   }
 }
 
 @media (max-width: 768px) {
-  #genre-select {
+  .lib-genre-select {
     width: 100%;
   }
 
@@ -286,26 +286,26 @@
     font-size: 16px;
   }
 
-  #filters {
+  .lib-filters {
     flex-direction: column;
     align-items: center;
     margin-left: 15px;
     margin-right: 170px;
   }
 
-  #load-more {
+  .lib-load-more {
     font-size: 14px;
   }
 
-  .empty-library h2 {
+  .lib-empty-library-header {
     font-size: 32px;
   }
 
-  .empty-library p {
+  .lib-empty-library-description {
     font-size: 16px;
   }
 
-  .empty-library button {
+  .lib-empty-library-btn {
     font-size: 15px;
   }
 }

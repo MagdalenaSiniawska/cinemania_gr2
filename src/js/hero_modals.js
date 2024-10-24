@@ -53,20 +53,33 @@ export const openDetailsModal = details => {
       <div class="modal-image" style="background-image: url('${backgroundImage}');"></div>
       <div class="modal-text">
         <h3 class="modal-title">${details.title}</h3>
-        <div class="tags-grade-wrap">
-        <div>
-        <p><strong>Vote / Votes:</strong></p>
-        <p><strong>Popularity:</strong></p>
-        <p><strong>Genres:</strong></p>
-</div><div>
-<p> ${details.vote_average} / ${details.vote_count}</p>        
-<p> ${details.popularity.toFixed(1)}</p>          
-<p> ${details.genres.map(genre => genre.name).join(', ')}</p>
-    </div></div>
-    <div class="modal-text-about">
-        <p ><strong>ABOUT:</strong></p>
+
+        <table class="tags-grade-wrap">
+        <tr>
+          <th>Vote / Votes:</th>
+          <td id="hero-modal-vote">
+            <span class="hero-vote-average-container">
+              <span class="hero-vote-average">${details.vote_average}</span>
+            </span>
+            <span> / </span>
+            <span class="hero-vote-count-container">
+              <span class="hero-vote-count">${details.vote_count}</span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>Popularity:</th>
+          <td id="hero-popularity">${details.popularity.toFixed(1)}</td>
+        </tr>
+        <tr>
+          <th>Genre:</th>
+          <td id="hero-genre">${details.genres.map(genre => genre.name).join(', ')}</td>
+        </tr>
+      </table>
+        <div class="modal-text-about">
+        <p ><strong>About:</strong></p>
         <p class="modal-text-about">${details.overview}</p>
-    </div>
+        </div>
         <button id="add-to-library" class="add-to-library-btn">Add to my library</button>
       </div>
     </div>
