@@ -6,9 +6,9 @@
     <title>My-library</title>
     <script type="module" crossorigin src="/cinemania_gr2/library.js"></script>
     <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/vendor-nSNXNpMc.js">
-    <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/footer-DQzmd3O7.js">
+    <link rel="modulepreload" crossorigin href="/cinemania_gr2/assets/footer-CqRdLSEq.js">
     <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/vendor-DnveWo0P.css">
-    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/footer-CBLB9uk8.css">
+    <link rel="stylesheet" crossorigin href="/cinemania_gr2/assets/footer-DAlW_5di.css">
   </head>
 
   <body>
@@ -84,8 +84,8 @@
         </div>
       </section>
 
-      <div id="filters">
-        <select id="genre-select">
+      <div id="filters" class="lib-filters">
+        <select id="genre-select" class="lib-genre-select">
           <!-- Opcje gatunków zostaną dodane w JavaScript -->
         </select>
       </div>
@@ -95,21 +95,20 @@
         class="movies-list"
         aria-labelledby="catalog-header"
       >
-        <h2 id="catalog-header">Movie Catalog</h2>
+        <!-- <h2 id="catalog-header">Movie Catalog</h2> -->
         <div class="catalog-films"></div>
       </section>
 
       <div id="modal-details" class="modal"></div>
 
-      <button id="load-more">Load More</button>
+      <button id="load-more" class="lib-load-more">Load More</button>
 
-      <section class="empty-library" id="empty-library" style="display: none">
-        <h2>OOPS...</h2>
-        <p>You don't have any movies in your library.</p>
-        <a href="./catalog.html"
-          ><button id="searchMovieBtn">Search Movie</button></a
-        >
+      <section class="lib-empty-library" id="empty-library" style="display: none">
+        <h2 class="lib-empty-library-header">OOPS...</h2>
+        <p class="lib-empty-library-description">You dont have any movies at your library.</p>
+        <button class="lib-empty-library-btn">Search Movie</button>
       </section>
+      
     </main>
     <footer>
       <footer class="footer">
